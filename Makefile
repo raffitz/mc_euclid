@@ -2,5 +2,9 @@
 
 all: mc_euclid
 
-mc_euclid: main.c
-	gcc -Wall main.c -o mc_euclid -lpng -ljson-c -DMCE_DEBUG
+expressions.o: expressions.c
+	gcc -Wall -c expressions.c -o expressions.o
+
+mc_euclid: main.c expressions.o
+	gcc -Wall expressions.o main.c -o mc_euclid -lpng -ljson-c -DMCE_DEBUG
+
