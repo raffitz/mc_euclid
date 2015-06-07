@@ -25,6 +25,7 @@ double evaluate(union expression *expression,int*vars){
 			for(i=0;i<(*aprod).length;i++){
 				accum *= evaluate((union expression *) &((*aprod).prodvals[i]),vars);
 			}
+			return accum;
 			break;
 		case 'v':
 			avar = (struct m_var*) asum;

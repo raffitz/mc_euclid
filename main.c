@@ -139,14 +139,34 @@ int main(int argc, char** argv){
 	
 	picture = malloc((maxz+1)*sizeof(uint8_t**));
 	
+#ifdef MCE_DEBUG
+	printf("\n");
+#endif
+
 	for(vars[2]=0;vars[2]<=maxz;vars[2]++){
 		picture[vars[2]]= malloc((maxx+1)*sizeof(uint8_t*));
 		for(vars[0] = 0; vars[0]<= maxx; vars[0]++){
 			picture[vars[2]][vars[0]] = malloc((maxy+1)*sizeof(uint8_t));
 			for(vars[1]=0;vars[1]<= maxy; vars[1]++){
-				picture[vars[2]][vars[0]][vars[1]] = bevaluate(&condition,expressions,vars);
+				if(bevaluate(&condition,expressions,vars)){
+					picture[vars[2]][vars[0]][vars[1]] = 1;
+#ifdef MCE_DEBUG
+					printf("+");
+#endif
+				}else{
+					picture[vars[2]][vars[0]][vars[1]] = 0;
+#ifdef MCE_DEBUG
+					printf("-");
+#endif
+				}
 			}
+#ifdef MCE_DEBUG
+			printf("\n");
+#endif
 		}
+#ifdef MCE_DEBUG
+		printf("\n");
+#endif
 	}
 	exit(0);
 }
