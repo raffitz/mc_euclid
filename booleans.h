@@ -4,21 +4,23 @@
 #ifndef MCE_BOOLEANS
 #define MCE_BOOLEANS
 
+typedef union boolean boolean;
+
 struct b_and{
 	char type;
-	unsigned char length;
-	void** ands;
+	int length;
+	union boolean* ands;
 };
 
 struct b_or{
 	char type;
-	unsigned char length;
-	void** ors;
+	int length;
+	union boolean* ors;
 };
 
 struct b_ltoez{
 	char type;
-	unsigned char index;
+	int index;
 };
 
 union boolean{

@@ -17,10 +17,17 @@ double getdoublevar(char* place,char* name,json_object* parent);
 int getintvar(char* place,char* name,json_object* parent);
 void getexpression(union expression* destination,json_object* json_exp);
 void getexpressionarray(union expression** destarray,int* lgth,char* place, char* name, json_object* parent);
+void getcondition(union boolean * destination, json_object* json_bool);
+void getconditionarray(union boolean** destarray,int* lgth,char* place, char* name, json_object* parent);
 
 int main(int argc, char** argv){
 	
 	double width,height,depth;
+	int maxx,maxy,maxz;
+	
+	int vars[4];
+	
+	uint8_t ***picture;
 	
 	uint8_t argcounter = 0;
 	char argopt;
@@ -36,6 +43,7 @@ int main(int argc, char** argv){
 	union boolean condition;
 	
 	json_object* the_solid;
+	json_object* condobj;
 	
 	int solid_fd;
 	int solid_length;
@@ -45,7 +53,7 @@ int main(int argc, char** argv){
 	
 	
 	/* Parameter reading: */
-	while((argopt = getopt(argc,argv,"+hs:o:"))!=-1){
+	while((argopt = getopt(argc,argv,"+hs:o:f:"))!=-1){
 		switch(argopt){
 			case 's':
 				strncpy(solid,optarg,MCE_BUFFER);
@@ -55,13 +63,18 @@ int main(int argc, char** argv){
 				strncpy(dir,optarg,MCE_BUFFER);
 				argcounter++;
 				break;
+			case 'f':
+				if(sscanf(optarg,"%d",&(vars[3]))==1){
+					argcounter++;
+					break;
+				}
 			default:
 				usage(argv[0]);
 				exit(0);
 				break;
 		}
 	}
-	if(argcounter != 2){
+	if(argcounter != 3){
 		usage(argv[0]);
 		exit(-1);
 	}
@@ -103,19 +116,48 @@ int main(int argc, char** argv){
 	
 		/* Expressions: */
 	getexpressionarray(&expressions,&explength,solid, "expressions", the_solid);
-
+	
+		/* Condition: */
+	if(!json_object_object_get_ex(the_solid,"condition",&condobj)){
+		printf("Error parsing %s, no condition\n",solid);
+		exit(-1);
+	}
+	
+	getcondition(&condition,condobj);
+	
 #ifdef MCE_DEBUG	
 	printf("Finished parsing %s. %f by %f by %f\n",solid,width,height,depth);
 #endif
+		
+		
+
+	/* Calculations: */
+	
+	maxx = ceil(width * vars[3]);
+	maxy = ceil(height * vars[3]);
+	maxz = ceil(depth * vars[3]);
+	
+	picture = malloc((maxz+1)*sizeof(uint8_t**));
+	
+	for(vars[2]=0;vars[2]<=maxz;vars[2]++){
+		picture[vars[2]]= malloc((maxx+1)*sizeof(uint8_t*));
+		for(vars[0] = 0; vars[0]<= maxx; vars[0]++){
+			picture[vars[2]][vars[0]] = malloc((maxy+1)*sizeof(uint8_t));
+			for(vars[1]=0;vars[1]<= maxy; vars[1]++){
+				picture[vars[2]][vars[0]][vars[1]] = bevaluate(&condition,expressions,vars);
+			}
+		}
+	}
 	exit(0);
 }
 
 void usage(char* name){
-	printf("Usage: %s -s [solid] -o [dir]\n"
+	printf("Usage: %s -s [solid] -o [dir] -f [scale]\n"
 		"\tsolid:\t The euclidean solid to be generated.\n"
 		"\t\t\tAccepted solids are:\n"
 		"\t\t\t- (none at the moment)\n"
-		"\tdir:\t The directory where the maps will go\n\n",
+		"\tdir:\t The directory where the maps will go\n"
+		"\tscale:\t The scale factor of the solid\n\n",
 		name);
 }
 
@@ -186,7 +228,7 @@ void getexpression(union expression* destination,json_object* json_exp){
 	}else if(strcmp(m_type,"var")==0){
 		avar = (struct m_var*) destination;
 		(*avar).type = 'v';
-		(*avar).index = (unsigned char) getintvar("expression, bad var","index",json_exp);
+		(*avar).index = getintvar("expression, bad var","index",json_exp);
 		(*avar).coeff = getdoublevar("expression, bad var","coeff",json_exp);
 	}else if(strcmp(m_type,"sum")==0){
 		asum = (struct m_sum*) destination;
@@ -254,6 +296,68 @@ void getexpressionarray(union expression** destarray,int* lgth,char* place, char
 			exit(-1);
 		}
 		getexpression(&((*destarray)[i]),jsingleexp);
+	}
+	(*lgth) = length;
+	
+}
+
+void getcondition(union boolean* destination,json_object* json_bool){
+	json_object *auxjo;
+	const char* b_type;
+	
+	struct b_and *aand;
+	struct b_or *aor;
+	struct b_ltoez *al;
+	
+	if(!json_object_object_get_ex(json_bool,"b_type",&auxjo)){
+		printf("Error parsing condition, missing b_type\n");
+		exit(-1);
+	}
+	b_type = json_object_get_string(auxjo);
+	
+	if(strcmp(b_type,"and")==0){
+		aand = (struct b_and*) destination;
+		(*aand).type = 'a';
+		getconditionarray(&((*aand).ands),&((*aand).length),"condition, bad and","conditions",json_bool);
+	}else if(strcmp(b_type,"or")==0){
+		aor = (struct b_or*) destination;
+		(*aor).type = 'o';
+		getconditionarray(&((*aor).ors),&((*aor).length),"condition, bad or","conditions",json_bool);
+	}else if(strcmp(b_type,"ltoez")==0){
+		al = (struct b_ltoez*) destination;
+		(*al).type = 'l';
+		(*al).index = getintvar("condition, bad ltoez","expression",json_bool);
+	}else{
+		printf("Error parsing condition, unrecognized b_type\n");
+		exit(-1);
+	}
+}
+
+void getconditionarray(union boolean** destarray,int* lgth,char* place, char* name, json_object* parent){
+	enum json_type type;
+	int length,i;
+	json_object * aux_json;
+	json_object * jsinglecond;
+	if(!json_object_object_get_ex(parent,name,&aux_json)){
+		printf("Error parsing %s, no %s\n",place,name);
+		exit(-1);
+	}
+	type = json_object_get_type(aux_json);
+	if(type!= json_type_array){
+		printf("Error parsing %s, bad %s format\n",place,name);
+		exit(-1);
+	}
+	length = json_object_array_length(aux_json);
+	(*destarray) = malloc(length * sizeof(union expression));
+	
+	for(i=0;i<length;i++){
+		jsinglecond = json_object_array_get_idx(aux_json,i);
+		type = json_object_get_type(jsinglecond);
+		if(type!=json_type_object){
+			printf("Error parsing %s, %s element %d isn't object\n",place,name,i);
+			exit(-1);
+		}
+		getcondition(&((*destarray)[i]),jsinglecond);
 	}
 	(*lgth) = length;
 	

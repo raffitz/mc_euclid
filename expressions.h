@@ -21,7 +21,7 @@ struct m_const{
 };
 struct m_var{
 	char type;
-	unsigned char index;
+	int index;
 	double coeff;
 };
 struct m_power{
