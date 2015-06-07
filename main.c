@@ -7,14 +7,17 @@
 #include <fcntl.h>
 #include <json-c/json.h>
 #include <png.h>
+#include "expressions.h"
+#include "booleans.h"
 
 #define MCE_BUFFER 256
 
 void usage(char* name);
-
-
+double getdoublevar(char* file,char* name,json_object* solid);
 
 int main(int argc, char** argv){
+	
+	double width,height,depth;
 	
 	uint8_t argcounter = 0;
 	char argopt;
@@ -23,6 +26,16 @@ int main(int argc, char** argv){
 	char dir[MCE_BUFFER];
 	
 	char* json_solid_desc;
+	
+	union expression* expressions;
+	
+	union boolean condition;
+	
+	unsigned char auxnum;
+	
+	json_object* the_solid;
+	json_object* aux_json;
+	enum json_type type;
 	
 	int solid_fd;
 	int solid_length;
@@ -79,6 +92,14 @@ int main(int argc, char** argv){
 	printf("%s\n",json_solid_desc);
 #endif
 	
+	/* Parsing of the solid: */
+	the_solid = json_tokener_parse(json_solid_desc);
+	
+		/* Width, Height, Depth: */
+	width = getdoublevar(solid,"width",the_solid);
+	height = getdoublevar(solid,"height",the_solid);
+	depth = getdoublevar(solid,"depth",the_solid);
+	/**** /!\ ****/
 }
 
 void usage(char* name){
@@ -88,4 +109,25 @@ void usage(char* name){
 		"\t\t\t- (none at the moment)\n"
 		"\tdir:\t The directory where the maps will go\n\n",
 		name);
+}
+
+double getdoublevar(char* file,char* name,json_object* solid){
+	json_object* object;
+	if(!json_object_object_get_ex(solid,name,&object)){
+		printf("Error parsing %s, no %s\n",file,name);
+		exit(-1);
+	}
+	switch(json_object_get_type(object)){
+		case json_type_double:
+			return json_object_get_double(object);
+			break;
+		case json_type_int:
+			return (double) json_object_get_int(object);
+			break;
+		default:
+			printf("Error parsing %s, bad %s format\n",file,name);
+			exit(-1);
+			break;
+	}
+	return 0;
 }
