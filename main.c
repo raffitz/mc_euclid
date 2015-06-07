@@ -83,11 +83,12 @@ int main(int argc, char** argv){
 #endif
 	
 	/* Allocation of memory: */
-	json_solid_desc = malloc(solid_length);
+	json_solid_desc = malloc(solid_length + 1);
 	if(read(solid_fd,json_solid_desc,solid_length)!=solid_length){
 		perror(argv[0]);
 		exit(-1);
 	}
+	json_solid_desc[solid_length] = 0;
 #ifdef MCE_DEBUG
 	printf("%s\n",json_solid_desc);
 #endif
