@@ -19,6 +19,7 @@ struct m_const{
 struct m_var{
 	char type;
 	unsigned char index;
+	double coeff;
 };
 
 union expression{

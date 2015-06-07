@@ -27,7 +27,7 @@ double evaluate(union expression *expression,int*vars){
 			break;
 		case 'v':
 			avar = (struct m_var*) asum;
-			return (double) vars[(*avar).index];
+			return (*avar).coeff * vars[(*avar).index];
 		case 'c':
 			aconst = (struct m_const*) asum;
 			return (*aconst).value;
