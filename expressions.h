@@ -1,3 +1,4 @@
+#include <math.h>
 
 #ifndef MCE_EXPRESSIONS
 #define MCE_EXPRESSIONS
@@ -21,12 +22,18 @@ struct m_var{
 	unsigned char index;
 	double coeff;
 };
+struct m_power{
+	char type;
+	void* exponent;
+	void* base;
+};
 
 union expression{
 	struct m_sum sum;
 	struct m_product product;
 	struct m_const constant;
 	struct m_var var;
+	struct m_power power;
 };
 
 double evaluate(union expression *expression,int*vars);

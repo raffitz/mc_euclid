@@ -7,6 +7,7 @@ double evaluate(union expression *expression,int*vars){
 	struct m_product *aprod;
 	struct m_var *avar;
 	struct m_const *aconst;
+	struct m_power *apower;
 	
 	asum = (struct m_sum*) expression;
 	
@@ -31,6 +32,12 @@ double evaluate(union expression *expression,int*vars){
 		case 'c':
 			aconst = (struct m_const*) asum;
 			return (*aconst).value;
+		case 'e':
+			apower = (struct m_power*) asum;
+			return pow(
+				evaluate((union expression *) (*apower).base,vars),
+				evaluate((union expression *) (*apower).exponent,vars)
+				);
 		default:
 			break;
 	}
