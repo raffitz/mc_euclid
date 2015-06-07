@@ -3,15 +3,17 @@
 #ifndef MCE_EXPRESSIONS
 #define MCE_EXPRESSIONS
 
+typedef union expression exprssn;
+
 struct m_sum{
 	char type;
-	unsigned char length;
-	void** sumvals;
+	int length;
+	union expression* sumvals;
 };
 struct m_product{
 	char type;
-	unsigned char length;
-	void** prodvals;
+	int length;
+	union expression* prodvals;
 };
 struct m_const{
 	char type;
@@ -24,8 +26,8 @@ struct m_var{
 };
 struct m_power{
 	char type;
-	void* exponent;
-	void* base;
+	union expression* exponent;
+	union expression* base;
 };
 
 union expression{
