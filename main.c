@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 #include <fcntl.h>
 #include <json-c/json.h>
 #include <png.h>
@@ -11,6 +12,7 @@
 #include "booleans.h"
 
 #define MCE_BUFFER 256
+#define MCE_NBUFFER 384
 
 void usage(char* name);
 double getdoublevar(char* place,char* name,json_object* parent);
@@ -34,6 +36,12 @@ int main(int argc, char** argv){
 	
 	char solid[MCE_BUFFER];
 	char dir[MCE_BUFFER];
+	char file[MCE_NBUFFER];
+	
+	int picfd;
+	
+	png_structp png_ptr;
+	png_infop info_ptr;
 	
 	char* json_solid_desc;
 	
@@ -79,6 +87,8 @@ int main(int argc, char** argv){
 		exit(-1);
 	}
 	
+	
+	/* Opening solid: */
 	solid_fd = open(solid,O_RDONLY);
 	if(solid_fd < 0){
 		perror(argv[0]);
@@ -94,6 +104,14 @@ int main(int argc, char** argv){
 #ifdef MCE_DEBUG
 	printf("Size: %d\n",solid_length);
 #endif
+	
+	
+	/* Creating output directory: */
+	
+	if(mkdir(dir,755)<0){
+		perror(argv[0]);
+	}
+	
 	
 	/* Allocation of memory: */
 	json_solid_desc = malloc(solid_length + 1);
@@ -144,6 +162,34 @@ int main(int argc, char** argv){
 #endif
 
 	for(vars[2]=0;vars[2]<=maxz;vars[2]++){
+		
+		/* File opening: */
+		sprintf(file,"%s/%d.png",dir,vars[2]);
+		picfd = open(file,O_CREAT,S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		if(picfd<0){
+			printf("Error creating \"%s\".\n",file);
+			perror(argv[0]);
+			exit(-1);
+		}
+		
+		/* PNG structures: */
+		png_ptr = png_create_write_struct(
+			PNG_LIBPNG_VER_STRING,(png_voidp)user_error_ptr,
+			user_error_fn,user_warning_fn);
+		if(!png_ptr){
+			printf("Error initializing png structure.\n");
+			perror(argv[0]);
+			exit(-1);
+		}
+		
+		info_ptr = png_create_info_struct(png_ptr);
+		if(!info_ptr){
+			printf("Error creating png information structure.\n");
+			perror(argv[0]);
+			png_destroy_write_struct(&png_ptr,(png_infopp) NULL);
+			exit(-1);
+		}
+	
 		picture[vars[2]]= malloc((maxx+1)*sizeof(uint8_t*));
 		for(vars[0] = 0; vars[0]<= maxx; vars[0]++){
 			picture[vars[2]][vars[0]] = malloc((maxy+1)*sizeof(uint8_t));
@@ -167,6 +213,13 @@ int main(int argc, char** argv){
 #ifdef MCE_DEBUG
 		printf("\n");
 #endif
+		
+		/* Freeing png structures: */
+		/* TODO */
+		
+		/* Closing file: */
+		close(picfd);
+		
 	}
 	exit(0);
 }
