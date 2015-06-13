@@ -189,6 +189,16 @@ int main(int argc, char** argv){
 			png_destroy_write_struct(&png_ptr,(png_infopp) NULL);
 			exit(-1);
 		}
+		/* Set jump return address: */
+		if (setjmp(png_jmpbuf(png_ptr)))
+		{
+			png_destroy_write_struct(&png_ptr, &info_ptr);
+			close(picfd);
+			printf("Returned from a png function in error.\n");
+			exit(-1);
+		}
+		/* Set adequate writing functions: (Because I'm a stubborn bastard that doesn't like FILE*) */
+		png_set_write_fn(png_ptr,(voidp) &(picfd),(png_rw_ptr) user_write_data,(png_flush_ptr) user_flush_data);
 	
 		picture[vars[2]]= malloc((maxx+1)*sizeof(uint8_t*));
 		for(vars[0] = 0; vars[0]<= maxx; vars[0]++){
