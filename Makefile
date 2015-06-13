@@ -11,3 +11,10 @@ booleans.o: booleans.c
 mc_euclid: main.c expressions.o booleans.o
 	gcc -Wall expressions.o booleans.o main.c -o mc_euclid -lpng -ljson-c -lm -DMCE_DEBUG -g
 
+clean:
+	touch a.o
+	rm *.o
+	touch mc_euclid
+	rm mc_euclid
+
+.PHONY: clean
