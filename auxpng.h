@@ -1,4 +1,5 @@
 #include <png.h>
+#include <unistd.h>
 #ifndef MCE_AUXPNG
 #define MCE_AUXPNG
 

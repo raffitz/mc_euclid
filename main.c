@@ -10,6 +10,7 @@
 #include <png.h>
 #include "expressions.h"
 #include "booleans.h"
+#include "auxpng.h"
 
 #define MCE_BUFFER 256
 #define MCE_NBUFFER 384
@@ -174,8 +175,7 @@ int main(int argc, char** argv){
 		
 		/* PNG structures: */
 		png_ptr = png_create_write_struct(
-			PNG_LIBPNG_VER_STRING,(png_voidp)user_error_ptr,
-			user_error_fn,user_warning_fn);
+			PNG_LIBPNG_VER_STRING,(png_voidp)NULL,NULL,NULL);
 		if(!png_ptr){
 			printf("Error initializing png structure.\n");
 			perror(argv[0]);
@@ -189,6 +189,9 @@ int main(int argc, char** argv){
 			png_destroy_write_struct(&png_ptr,(png_infopp) NULL);
 			exit(-1);
 		}
+		/* Set image information: */
+		png_set_IHDR(png_ptr, info_ptr, (maxx+1)*4+1, (maxy+1)*4+1,2,PNG_COLOR_TYPE_GRAY,PNG_INTERLACE_NONE,
+			PNG_COMPRESSION_TYPE_DEFAULT,PNG_FILTER_TYPE_DEFAULT);
 		/* Set jump return address: */
 		if (setjmp(png_jmpbuf(png_ptr)))
 		{
@@ -198,8 +201,11 @@ int main(int argc, char** argv){
 			exit(-1);
 		}
 		/* Set adequate writing functions: (Because I'm a stubborn bastard that doesn't like FILE*) */
-		png_set_write_fn(png_ptr,(voidp) &(picfd),(png_rw_ptr) user_write_data,(png_flush_ptr) user_flush_data);
-	
+		png_set_write_fn(png_ptr,(png_voidp) &(picfd),user_write_data,user_flush_data);
+		
+		
+		
+		
 		picture[vars[2]]= malloc((maxx+1)*sizeof(uint8_t*));
 		for(vars[0] = 0; vars[0]<= maxx; vars[0]++){
 			picture[vars[2]][vars[0]] = malloc((maxy+1)*sizeof(uint8_t));
