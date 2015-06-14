@@ -30,7 +30,9 @@ int main(int argc, char** argv){
 	
 	int vars[4];
 	
+	/*
 	uint8_t ***picture;
+	*/
 	
 	uint8_t argcounter = 0;
 	char argopt;
@@ -43,6 +45,8 @@ int main(int argc, char** argv){
 	
 	png_structp png_ptr;
 	png_infop info_ptr;
+	
+	png_bytepp rowpointers;
 	
 	char* json_solid_desc;
 	
@@ -109,7 +113,7 @@ int main(int argc, char** argv){
 	
 	/* Creating output directory: */
 	
-	if(mkdir(dir,755)<0){
+	if(mkdir(dir,0777)<0){
 		perror(argv[0]);
 	}
 	
@@ -155,9 +159,9 @@ int main(int argc, char** argv){
 	maxx = ceil(width * vars[3]);
 	maxy = ceil(height * vars[3]);
 	maxz = ceil(depth * vars[3]);
-	
+	/*
 	picture = malloc((maxz+1)*sizeof(uint8_t**));
-	
+	*/
 #ifdef MCE_DEBUG
 	printf("\n");
 #endif
@@ -166,7 +170,7 @@ int main(int argc, char** argv){
 		
 		/* File opening: */
 		sprintf(file,"%s/%d.png",dir,vars[2]);
-		picfd = open(file,O_CREAT,S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		picfd = open(file,O_WRONLY | O_CREAT,S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		if(picfd<0){
 			printf("Error creating \"%s\".\n",file);
 			perror(argv[0]);
@@ -200,12 +204,48 @@ int main(int argc, char** argv){
 			printf("Returned from a png function in error.\n");
 			exit(-1);
 		}
+#ifdef MCE_DEBUG
+		printf("Current file descriptor: %d (%x)\n",picfd,&picfd);
+#endif
 		/* Set adequate writing functions: (Because I'm a stubborn bastard that doesn't like FILE*) */
 		png_set_write_fn(png_ptr,(png_voidp) &(picfd),user_write_data,user_flush_data);
 		
+		rowpointers = png_malloc(png_ptr,(4*(maxy+1)+1)*sizeof(png_bytep));
+		for(vars[1]=0;vars[1]<= maxy; vars[1]++){
+			int i = vars[1]<<2;
+			rowpointers[i] = png_malloc(png_ptr,(4*(maxx+1)+1)*sizeof(png_byte));
+			rowpointers[i+1] = png_malloc(png_ptr,(4*(maxx+1)+1)*sizeof(png_byte));
+			rowpointers[i+2] = png_malloc(png_ptr,(4*(maxx+1)+1)*sizeof(png_byte));
+			rowpointers[i+3] = png_malloc(png_ptr,(4*(maxx+1)+1)*sizeof(png_byte));
+			for(vars[0] = 0; vars[0]<= maxx; vars[0]++){
+				int j = vars[0]<<2;
+				uint8_t result = bevaluate(&condition,expressions,vars);
+				for(int b=0;b<4;b++){
+					rowpointers[i+b][j] = 0x00;
+					rowpointers[i+b][j+1] = 0x00;
+					rowpointers[i+b][j+2] = 0x00;
+					rowpointers[i+b][j+3] = 0x00;
+				}
+				for(int a = 1;a<4;a++){
+					rowpointers[i][j+a] = 0x00;
+					if(result){
+						for(int b = 1;b<4;b++){
+							rowpointers[i+b][j+a] = 0x00;
+						}
+					}else{
+						for(int b = 1;b<4;b++){
+							rowpointers[i+b][j+a] = 0xff;
+						}
+					}
+				}
+			}
+		}
+		png_set_rows(png_ptr, info_ptr,rowpointers);
 		
+		png_write_png(png_ptr,info_ptr,PNG_TRANSFORM_IDENTITY,NULL);
 		
-		
+		png_destroy_write_struct(&png_ptr, &info_ptr);
+		/*
 		picture[vars[2]]= malloc((maxx+1)*sizeof(uint8_t*));
 		for(vars[0] = 0; vars[0]<= maxx; vars[0]++){
 			picture[vars[2]][vars[0]] = malloc((maxy+1)*sizeof(uint8_t));
@@ -229,7 +269,7 @@ int main(int argc, char** argv){
 #ifdef MCE_DEBUG
 		printf("\n");
 #endif
-		
+		*/
 		/* Freeing png structures: */
 		/* TODO */
 		
