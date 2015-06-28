@@ -1,0 +1,347 @@
+{
+	"width": 1,
+	"height": 0.866025403784,
+	"depth": 0.816496580928,
+
+	"expressions":[
+		{
+			"m_type":"sum",
+			"parcels":[
+				{
+					"m_type":"product",
+					"parcels":[
+						{
+							"m_type": "const",
+							"value": 0
+						},
+						{
+							"m_type":"sum",
+							"parcels":[
+								{
+									"m_type": "var",
+									"index": 0,
+									"coeff": 1
+								},
+								{
+									"m_type": "var",
+									"index": 3,
+									"coeff": -0
+								}
+							]
+						}
+					]
+				},
+				{
+					"m_type":"product",
+					"parcels":[
+						{
+							"m_type": "const",
+							"value": 0
+						},
+						{
+							"m_type":"sum",
+							"parcels":[
+								{
+									"m_type": "var",
+									"index": 1,
+									"coeff": 1
+								},
+								{
+									"m_type": "var",
+									"index": 3,
+									"coeff": -0
+								}
+							]
+						}
+					]
+				},
+				{
+					"m_type":"product",
+					"parcels":[
+						{
+							"m_type": "const",
+							"value": -1
+						},
+						{
+							"m_type":"sum",
+							"parcels":[
+								{
+									"m_type": "var",
+									"index": 2,
+									"coeff": 1
+								},
+								{
+									"m_type": "var",
+									"index": 3,
+									"coeff": -0
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+
+
+
+
+
+                {
+			"m_type":"sum",
+			"parcels":[
+				{
+					"m_type":"product",
+					"parcels":[
+						{
+							"m_type": "const",
+							"value": 0
+						},
+						{
+							"m_type":"sum",
+							"parcels":[
+								{
+									"m_type": "var",
+									"index": 0,
+									"coeff": 1
+								},
+								{
+									"m_type": "var",
+									"index": 3,
+									"coeff": -0
+								}
+							]
+						}
+					]
+				},
+				{
+					"m_type":"product",
+					"parcels":[
+						{
+							"m_type": "const",
+							"value": -0.721687836487
+						},
+						{
+							"m_type":"sum",
+							"parcels":[
+								{
+									"m_type": "var",
+									"index": 1,
+									"coeff": 1
+								},
+								{
+									"m_type": "var",
+									"index": 3,
+									"coeff": -0
+								}
+							]
+						}
+					]
+				},
+				{
+					"m_type":"product",
+					"parcels":[
+						{
+							"m_type": "const",
+							"value": 0.408248248290464
+						},
+						{
+							"m_type":"sum",
+							"parcels":[
+								{
+									"m_type": "var",
+									"index": 2,
+									"coeff": 1
+								},
+								{
+									"m_type": "var",
+									"index": 3,
+									"coeff": -0
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+
+
+
+
+
+                {
+			"m_type":"sum",
+			"parcels":[
+				{
+					"m_type":"product",
+					"parcels":[
+						{
+							"m_type": "const",
+							"value": -0.625
+						},
+						{
+							"m_type":"sum",
+							"parcels":[
+								{
+									"m_type": "var",
+									"index": 0,
+									"coeff": 1
+								},
+								{
+									"m_type": "var",
+									"index": 3,
+									"coeff": -0
+								}
+							]
+						}
+					]
+				},
+				{
+					"m_type":"product",
+					"parcels":[
+						{
+							"m_type": "const",
+							"value": 0.360843918244
+						},
+						{
+							"m_type":"sum",
+							"parcels":[
+								{
+									"m_type": "var",
+									"index": 1,
+									"coeff": 1
+								},
+								{
+									"m_type": "var",
+									"index": 3,
+									"coeff": -0
+								}
+							]
+						}
+					]
+				},
+				{
+					"m_type":"product",
+					"parcels":[
+						{
+							"m_type": "const",
+							"value": 0.408248248290464
+						},
+						{
+							"m_type":"sum",
+							"parcels":[
+								{
+									"m_type": "var",
+									"index": 2,
+									"coeff": 1
+								},
+								{
+									"m_type": "var",
+									"index": 3,
+									"coeff": -0
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+                {
+			"m_type":"sum",
+			"parcels":[
+				{
+					"m_type":"product",
+					"parcels":[
+						{
+							"m_type": "const",
+							"value": 0
+						},
+						{
+							"m_type":"sum",
+							"parcels":[
+								{
+									"m_type": "var",
+									"index": 0,
+									"coeff": 1
+								},
+								{
+									"m_type": "var",
+									"index": 3,
+									"coeff": -1
+								}
+							]
+						}
+					]
+				},
+				{
+					"m_type":"product",
+					"parcels":[
+						{
+							"m_type": "const",
+							"value": 0
+						},
+						{
+							"m_type":"sum",
+							"parcels":[
+								{
+									"m_type": "var",
+									"index": 1,
+									"coeff": 1
+								},
+								{
+									"m_type": "var",
+									"index": 3,
+									"coeff": -0
+								}
+							]
+						}
+					]
+				},
+				{
+					"m_type":"product",
+					"parcels":[
+						{
+							"m_type": "const",
+							"value": 0.408248248290464
+						},
+						{
+							"m_type":"sum",
+							"parcels":[
+								{
+									"m_type": "var",
+									"index": 2,
+									"coeff": 1
+								},
+								{
+									"m_type": "var",
+									"index": 3,
+									"coeff": -0
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"condition":{
+		"b_type": "and",
+		"conditions": [
+			{
+				"b_type": "ltoez",
+				"expression": 0
+			},
+			{
+				"b_type": "ltoez",
+				"expression": 1
+			},
+			{
+				"b_type": "ltoez",
+				"expression": 2
+			},
+			{
+				"b_type": "ltoez",
+				"expression": 3
+			}
+		]
+	}
+}

@@ -1,4 +1,4 @@
-DFLAGS=
+DFLAGS=-DMCE_DEBUG3 -g
 
 all: mc_euclid
 

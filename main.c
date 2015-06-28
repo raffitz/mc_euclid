@@ -176,7 +176,7 @@ int main(int argc, char** argv){
 		write(picfd,linebuffer,strlen(linebuffer));
 		sprintf(linebuffer,"static char * %03d_xpm[] = {\n",vars[2]);
 		write(picfd,linebuffer,strlen(linebuffer));
-		sprintf(linebuffer,"\"%d %d 3 1\",\n",imgw,imgh);
+		sprintf(linebuffer,"\"%d %d 3 1\",\n",imgh,imgw);
 		write(picfd,linebuffer,strlen(linebuffer));
 		sprintf(linebuffer,"\"-\tc #ffffff\",\n");
 		write(picfd,linebuffer,strlen(linebuffer));
@@ -206,7 +206,7 @@ int main(int argc, char** argv){
 			strcat(linebuffer,"|\",\n");
 
 			write(picfd,"\"",1);
-			for(int r=0;r<imgw;r++) write(picfd,"|",1);
+			for(int r=0;r<imgh;r++) write(picfd,"|",1);
 			write(picfd,"\",\n",3);
 
 			write(picfd,linebuffer,strlen(linebuffer));
