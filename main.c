@@ -24,47 +24,49 @@ void getcondition(union boolean * destination, json_object* json_bool);
 void getconditionarray(union boolean** destarray,int* lgth,char* place, char* name, json_object* parent);
 
 int main(int argc, char** argv){
-	
+
 	double width,height,depth;
 	int maxx,maxy,maxz;
-	
+
 	int vars[4];
-	
+
 	/*
 	uint8_t ***picture;
 	*/
-	
+
 	uint8_t argcounter = 0;
 	char argopt;
-	
+
 	char solid[MCE_BUFFER];
 	char dir[MCE_BUFFER];
 	char file[MCE_NBUFFER];
-	
+
 	int picfd;
-	
+
 	png_structp png_ptr;
 	png_infop info_ptr;
-	
+
+	png_color_8 p8c;
+
 	png_bytepp rowpointers;
-	
+
 	char* json_solid_desc;
-	
+
 	union expression* expressions;
 	int explength;
-	
+
 	union boolean condition;
-	
+
 	json_object* the_solid;
 	json_object* condobj;
-	
+
 	int solid_fd;
 	int solid_length;
-	
+
 	extern char* optarg; /* Variable to store arguments */
-	
-	
-	
+
+
+
 	/* Parameter reading: */
 	while((argopt = getopt(argc,argv,"+hs:o:f:"))!=-1){
 		switch(argopt){
@@ -91,15 +93,15 @@ int main(int argc, char** argv){
 		usage(argv[0]);
 		exit(-1);
 	}
-	
-	
+
+
 	/* Opening solid: */
 	solid_fd = open(solid,O_RDONLY);
 	if(solid_fd < 0){
 		perror(argv[0]);
 		exit(-1);
 	}
-	
+
 	/* Determination of file size: */
 	solid_length = lseek(solid_fd,0,SEEK_END);
 	if(lseek(solid_fd,0,SEEK_SET)<0){
@@ -109,15 +111,15 @@ int main(int argc, char** argv){
 #ifdef MCE_DEBUG
 	printf("Size: %d\n",solid_length);
 #endif
-	
-	
+
+
 	/* Creating output directory: */
-	
+
 	if(mkdir(dir,0777)<0){
 		perror(argv[0]);
 	}
-	
-	
+
+
 	/* Allocation of memory: */
 	json_solid_desc = malloc(solid_length + 1);
 	if(read(solid_fd,json_solid_desc,solid_length)!=solid_length){
@@ -125,37 +127,37 @@ int main(int argc, char** argv){
 		exit(-1);
 	}
 	json_solid_desc[solid_length] = 0;
-#ifdef MCE_DEBUG
+#ifdef MCE_DEBUG2
 	printf("%s\n",json_solid_desc);
 #endif
-	
+
 	/* Parsing of the solid: */
 	the_solid = json_tokener_parse(json_solid_desc);
-	
+
 		/* Width, Height, Depth: */
 	width = getdoublevar(solid,"width",the_solid);
 	height = getdoublevar(solid,"height",the_solid);
 	depth = getdoublevar(solid,"depth",the_solid);
-	
+
 		/* Expressions: */
 	getexpressionarray(&expressions,&explength,solid, "expressions", the_solid);
-	
+
 		/* Condition: */
 	if(!json_object_object_get_ex(the_solid,"condition",&condobj)){
 		printf("Error parsing %s, no condition\n",solid);
 		exit(-1);
 	}
-	
+
 	getcondition(&condition,condobj);
-	
-#ifdef MCE_DEBUG	
+
+#ifdef MCE_DEBUG
 	printf("Finished parsing %s. %f by %f by %f\n",solid,width,height,depth);
 #endif
-		
-		
+
+
 
 	/* Calculations: */
-	
+
 	maxx = ceil(width * vars[3]);
 	maxy = ceil(height * vars[3]);
 	maxz = ceil(depth * vars[3]);
@@ -167,7 +169,7 @@ int main(int argc, char** argv){
 #endif
 
 	for(vars[2]=0;vars[2]<=maxz;vars[2]++){
-		
+
 		/* File opening: */
 		sprintf(file,"%s/%d.png",dir,vars[2]);
 		picfd = open(file,O_WRONLY | O_CREAT,S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
@@ -176,7 +178,7 @@ int main(int argc, char** argv){
 			perror(argv[0]);
 			exit(-1);
 		}
-		
+
 		/* PNG structures: */
 		png_ptr = png_create_write_struct(
 			PNG_LIBPNG_VER_STRING,(png_voidp)NULL,NULL,NULL);
@@ -185,7 +187,7 @@ int main(int argc, char** argv){
 			perror(argv[0]);
 			exit(-1);
 		}
-		
+
 		info_ptr = png_create_info_struct(png_ptr);
 		if(!info_ptr){
 			printf("Error creating png information structure.\n");
@@ -194,8 +196,19 @@ int main(int argc, char** argv){
 			exit(-1);
 		}
 		/* Set image information: */
-		png_set_IHDR(png_ptr, info_ptr, (maxx+1)*4+1, (maxy+1)*4+1,2,PNG_COLOR_TYPE_GRAY,PNG_INTERLACE_NONE,
+		png_set_IHDR(png_ptr, info_ptr, (maxx+1)*4+1, (maxy+1)*4+1,8,PNG_COLOR_TYPE_GRAY,PNG_INTERLACE_NONE,
 			PNG_COMPRESSION_TYPE_DEFAULT,PNG_FILTER_TYPE_DEFAULT);
+
+		png_set_gAMA(png_ptr, info_ptr, PNG_INFO_gAMA);
+
+		p8c.red = 0;
+		p8c.green = 0;
+		p8c.blue = 0;
+		p8c.gray = 8;
+		p8c.alpha = 0;
+
+		png_set_sBIT(png_ptr,info_ptr,&p8c);
+
 		/* Set jump return address: */
 		if (setjmp(png_jmpbuf(png_ptr)))
 		{
@@ -209,7 +222,7 @@ int main(int argc, char** argv){
 #endif
 		/* Set adequate writing functions: (Because I'm a stubborn bastard that doesn't like FILE*) */
 		png_set_write_fn(png_ptr,(png_voidp) &(picfd),user_write_data,user_flush_data);
-		
+
 		rowpointers = png_malloc(png_ptr,(4*(maxy+1)+1)*sizeof(png_bytep));
 		for(vars[1]=0;vars[1]<= maxy; vars[1]++){
 			int i = vars[1]<<2;
@@ -240,10 +253,12 @@ int main(int argc, char** argv){
 				}
 			}
 		}
+		printf("rowpointers: %x\n",rowpointers);
+		printf("rowpointers[0]: %x\n",rowpointers[0]);
 		png_set_rows(png_ptr, info_ptr,rowpointers);
-		
+
 		png_write_png(png_ptr,info_ptr,PNG_TRANSFORM_IDENTITY,NULL);
-		
+
 		png_destroy_write_struct(&png_ptr, &info_ptr);
 		/*
 		picture[vars[2]]= malloc((maxx+1)*sizeof(uint8_t*));
@@ -272,10 +287,10 @@ int main(int argc, char** argv){
 		*/
 		/* Freeing png structures: */
 		/* TODO */
-		
+
 		/* Closing file: */
 		close(picfd);
-		
+
 	}
 	exit(0);
 }
@@ -337,19 +352,19 @@ void getexpression(union expression* destination,json_object* json_exp){
 	enum json_type type;
 	json_object *auxjo, *aux;
 	const char* m_type;
-	
+
 	struct m_const* aconst;
 	struct m_var* avar;
 	struct m_sum* asum;
 	struct m_product* aproduct;
 	struct m_power* apower;
-	
+
 	if(!json_object_object_get_ex(json_exp,"m_type",&auxjo)){
 		printf("Error parsing expression, missing m_type\n");
 		exit(-1);
 	}
 	m_type = json_object_get_string(auxjo);
-	
+
 	if(strcmp(m_type,"const")==0){
 		aconst = (struct m_const*) destination;
 		(*aconst).type = 'c';
@@ -370,7 +385,7 @@ void getexpression(union expression* destination,json_object* json_exp){
 	}else if(strcmp(m_type,"power")==0){
 		apower = (struct m_power*) destination;
 		(*apower).type = 'e';
-		
+
 		if(!json_object_object_get_ex(json_exp,"exp",&aux)){
 			printf("Error parsing expression, bad power, missing exp\n");
 			exit(-1);
@@ -382,7 +397,7 @@ void getexpression(union expression* destination,json_object* json_exp){
 		}
 		(*apower).exponent = malloc(sizeof(union expression));
 		getexpression((*apower).exponent,aux);
-		
+
 		if(!json_object_object_get_ex(json_exp,"base",&aux)){
 			printf("Error parsing expression, bad power, missing base\n");
 			exit(-1);
@@ -416,7 +431,7 @@ void getexpressionarray(union expression** destarray,int* lgth,char* place, char
 	}
 	length = json_object_array_length(aux_json);
 	(*destarray) = malloc(length * sizeof(union expression));
-	
+
 	for(i=0;i<length;i++){
 		jsingleexp = json_object_array_get_idx(aux_json,i);
 		type = json_object_get_type(jsingleexp);
@@ -427,23 +442,23 @@ void getexpressionarray(union expression** destarray,int* lgth,char* place, char
 		getexpression(&((*destarray)[i]),jsingleexp);
 	}
 	(*lgth) = length;
-	
+
 }
 
 void getcondition(union boolean* destination,json_object* json_bool){
 	json_object *auxjo;
 	const char* b_type;
-	
+
 	struct b_and *aand;
 	struct b_or *aor;
 	struct b_ltoez *al;
-	
+
 	if(!json_object_object_get_ex(json_bool,"b_type",&auxjo)){
 		printf("Error parsing condition, missing b_type\n");
 		exit(-1);
 	}
 	b_type = json_object_get_string(auxjo);
-	
+
 	if(strcmp(b_type,"and")==0){
 		aand = (struct b_and*) destination;
 		(*aand).type = 'a';
@@ -478,7 +493,7 @@ void getconditionarray(union boolean** destarray,int* lgth,char* place, char* na
 	}
 	length = json_object_array_length(aux_json);
 	(*destarray) = malloc(length * sizeof(union expression));
-	
+
 	for(i=0;i<length;i++){
 		jsinglecond = json_object_array_get_idx(aux_json,i);
 		type = json_object_get_type(jsinglecond);
@@ -489,5 +504,5 @@ void getconditionarray(union boolean** destarray,int* lgth,char* place, char* na
 		getcondition(&((*destarray)[i]),jsinglecond);
 	}
 	(*lgth) = length;
-	
+
 }
