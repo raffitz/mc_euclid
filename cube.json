@@ -1,89 +1,88 @@
 {
-	"width": 1.414214,
-	"height": 1.632993,
-	"depth": 1.732051,
-	
+	"width": 1.41421356237310,
+	"height": 1.63299316185545,
+	"depth": 1.73205080756888,
+
 	"expressions":[
 		{
-			"m_type":"sum",
-			"parcels":[
-				{
-					"m_type":"product",
-					"parcels":[
-						{
-							"m_type": "var",
-							"index": 3,
-							"coeff": 0
-						},
-						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 0,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.7071068
-								}
-							]
-						}
-					]
-				},
-				{
-					"m_type":"product",
-					"parcels":[
-						{
-							"m_type": "var",
-							"index": 3,
-							"coeff": 0.816496581
-						},
-						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 1,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.816496581
-								}
-							]
-						}
-					]
-				},
-				{
-					"m_type":"product",
-					"parcels":[
-						{
-							"m_type": "var",
-							"index": 3,
-							"coeff": -0.5773503
-						},
-						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 2,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": 0
-								}
-							]
-						}
-					]
+		        "m_type":"sum",
+		        "parcels":[
+		                {
+		                        "m_type":"product",
+		                        "parcels":[
+		                                {
+		                                        "m_type": "const",
+		                                        "value": -0.707106781186547
+		                                },
+		                                {
+		                                        "m_type":"sum",
+		                                        "parcels":[
+		                                                {
+		                                                        "m_type": "var",
+		                                                        "index": 0,
+		                                                        "coeff": 1
+		                                                },
+		                                                {
+		                                                        "m_type": "var",
+		                                                        "index": 3,
+		                                                        "coeff": -0.707106781186548
+		                                                }
+		                                        ]
+		                                }
+		                        ]
+		                },
+		                {
+		                        "m_type":"product",
+		                        "parcels":[
+		                                {
+		                                        "m_type": "const",
+		                                        "value": -0.408248290463863
+		                                },
+		                                {
+		                                        "m_type":"sum",
+		                                        "parcels":[
+		                                                {
+		                                                        "m_type": "var",
+		                                                        "index": 1,
+		                                                        "coeff": 1
+		                                                },
+		                                                {
+		                                                        "m_type": "var",
+		                                                        "index": 3,
+		                                                        "coeff": -0.816496580927726
+		                                                }
+		                                        ]
+		                                }
+		                        ]
+		                },
+		                {
+		                        "m_type":"product",
+		                        "parcels":[
+		                                {
+		                                        "m_type": "const",
+		                                        "value": -0.577350269189626
+		                                },
+		                                {
+		                                        "m_type":"sum",
+		                                        "parcels":[
+		                                                {
+		                                                        "m_type": "var",
+		                                                        "index": 2,
+		                                                        "coeff": 1
+		                                                },
+		                                                {
+		                                                        "m_type": "var",
+		                                                        "index": 3,
+		                                                        "coeff": -0.000000000000000
+		                                                }
+		                                        ]
+		                                }
+		                        ]
 				}
 			]
 		},
+
+
 		{
 			"m_type":"sum",
 			"parcels":[
@@ -91,9 +90,8 @@
 					"m_type":"product",
 					"parcels":[
 						{
-							"m_type": "var",
-							"index": 3,
-							"coeff": -0.707106781186548
+							"m_type": "const",
+							"value": 0.000000000000000
 						},
 						{
 							"m_type":"sum",
@@ -106,7 +104,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -0.7071068
+									"coeff": -0.707106781186548
 								}
 							]
 						}
@@ -116,9 +114,8 @@
 					"m_type":"product",
 					"parcels":[
 						{
-							"m_type": "var",
-							"index": 3,
-							"coeff": 0.408248290463863
+							"m_type": "const",
+							"value": 0.816496580927726
 						},
 						{
 							"m_type":"sum",
@@ -131,7 +128,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -0.816496581
+									"coeff": -0.816496580927726
 								}
 							]
 						}
@@ -141,9 +138,8 @@
 					"m_type":"product",
 					"parcels":[
 						{
-							"m_type": "var",
-							"index": 3,
-							"coeff": -0.5773503
+							"m_type": "const",
+							"value": -0.577350269189626
 						},
 						{
 							"m_type":"sum",
@@ -156,7 +152,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": 0
+									"coeff": -0.000000000000000
 								}
 							]
 						}
@@ -164,6 +160,7 @@
 				}
 			]
 		},
+
 		{
 			"m_type":"sum",
 			"parcels":[
@@ -171,9 +168,8 @@
 					"m_type":"product",
 					"parcels":[
 						{
-							"m_type": "var",
-							"index": 3,
-							"coeff": -0.707106781186548
+							"m_type": "const",
+							"value": 0.707106781186547
 						},
 						{
 							"m_type":"sum",
@@ -186,7 +182,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -0.7071068
+									"coeff": -0.707106781186548
 								}
 							]
 						}
@@ -196,9 +192,8 @@
 					"m_type":"product",
 					"parcels":[
 						{
-							"m_type": "var",
-							"index": 3,
-							"coeff": -0.408248290463863
+							"m_type": "const",
+							"value": -0.408248290463863
 						},
 						{
 							"m_type":"sum",
@@ -211,7 +206,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -0.816496581
+									"coeff": -0.816496580927726
 								}
 							]
 						}
@@ -221,9 +216,8 @@
 					"m_type":"product",
 					"parcels":[
 						{
-							"m_type": "var",
-							"index": 3,
-							"coeff": -0.5773503
+							"m_type": "const",
+							"value": -0.577350269189626
 						},
 						{
 							"m_type":"sum",
@@ -236,7 +230,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": 0
+									"coeff": -0.000000000000000
 								}
 							]
 						}
@@ -244,10 +238,11 @@
 				}
 			]
 		},
-		
-		
-		
-		
+
+
+
+
+
 		{
 			"m_type":"sum",
 			"parcels":[
@@ -255,9 +250,8 @@
 					"m_type":"product",
 					"parcels":[
 						{
-							"m_type": "var",
-							"index": 3,
-							"coeff": 0
+							"m_type": "const",
+							"value": 0.000000000000000
 						},
 						{
 							"m_type":"sum",
@@ -270,7 +264,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -0.7071068
+									"coeff": -0.707106781186548
 								}
 							]
 						}
@@ -280,9 +274,8 @@
 					"m_type":"product",
 					"parcels":[
 						{
-							"m_type": "var",
-							"index": 3,
-							"coeff": -0.816496581
+							"m_type": "const",
+							"value": -0.816496580927726
 						},
 						{
 							"m_type":"sum",
@@ -295,7 +288,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -0.816496581
+									"coeff": -0.816496580927726
 								}
 							]
 						}
@@ -305,9 +298,8 @@
 					"m_type":"product",
 					"parcels":[
 						{
-							"m_type": "var",
-							"index": 3,
-							"coeff": 0.5773503
+							"m_type": "const",
+							"value": 0.577350269189626
 						},
 						{
 							"m_type":"sum",
@@ -320,7 +312,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -1.732051
+									"coeff": -1.732050807568877
 								}
 							]
 						}
@@ -328,6 +320,7 @@
 				}
 			]
 		},
+
 		{
 			"m_type":"sum",
 			"parcels":[
@@ -335,9 +328,8 @@
 					"m_type":"product",
 					"parcels":[
 						{
-							"m_type": "var",
-							"index": 3,
-							"coeff": 0.707106781186548
+							"m_type": "const",
+							"value": -0.707106781186547
 						},
 						{
 							"m_type":"sum",
@@ -350,7 +342,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -0.7071068
+									"coeff": -0.707106781186548
 								}
 							]
 						}
@@ -360,9 +352,8 @@
 					"m_type":"product",
 					"parcels":[
 						{
-							"m_type": "var",
-							"index": 3,
-							"coeff": -0.408248290463863
+							"m_type": "const",
+							"value": 0.408248290463863
 						},
 						{
 							"m_type":"sum",
@@ -375,7 +366,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -0.816496581
+									"coeff": -0.816496580927726
 								}
 							]
 						}
@@ -385,9 +376,8 @@
 					"m_type":"product",
 					"parcels":[
 						{
-							"m_type": "var",
-							"index": 3,
-							"coeff": 0.5773503
+							"m_type": "const",
+							"value": 0.577350269189626
 						},
 						{
 							"m_type":"sum",
@@ -400,7 +390,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -1.732051
+									"coeff": -1.732050807568877
 								}
 							]
 						}
@@ -408,6 +398,7 @@
 				}
 			]
 		},
+
 		{
 			"m_type":"sum",
 			"parcels":[
@@ -415,9 +406,8 @@
 					"m_type":"product",
 					"parcels":[
 						{
-							"m_type": "var",
-							"index": 3,
-							"coeff": 0.707106781186548
+							"m_type": "const",
+							"value": 0.707106781186547
 						},
 						{
 							"m_type":"sum",
@@ -430,7 +420,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -0.7071068
+									"coeff": -0.707106781186548
 								}
 							]
 						}
@@ -440,9 +430,8 @@
 					"m_type":"product",
 					"parcels":[
 						{
-							"m_type": "var",
-							"index": 3,
-							"coeff": 0.408248290463863
+							"m_type": "const",
+							"value": 0.408248290463863
 						},
 						{
 							"m_type":"sum",
@@ -455,7 +444,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -0.816496581
+									"coeff": -0.816496580927726
 								}
 							]
 						}
@@ -465,9 +454,8 @@
 					"m_type":"product",
 					"parcels":[
 						{
-							"m_type": "var",
-							"index": 3,
-							"coeff": 0.5773503
+							"m_type": "const",
+							"value": 0.577350269189626
 						},
 						{
 							"m_type":"sum",
@@ -480,7 +468,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -1.732051
+									"coeff": -1.732050807568877
 								}
 							]
 						}
@@ -488,7 +476,13 @@
 				}
 			]
 		}
-		
+
+
+
+
+
+
+
 	],
 	"condition":{
 		"b_type": "and",
