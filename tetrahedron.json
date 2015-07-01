@@ -253,7 +253,7 @@
 					"parcels":[
 						{
 							"m_type": "const",
-							"value": 0
+							"value": 0.625
 						},
 						{
 							"m_type":"sum",
@@ -277,7 +277,7 @@
 					"parcels":[
 						{
 							"m_type": "const",
-							"value": 0
+							"value": 0.360843918244
 						},
 						{
 							"m_type":"sum",
