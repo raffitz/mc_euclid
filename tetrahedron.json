@@ -328,10 +328,6 @@
 		"conditions": [
 			{
 				"b_type": "ltoez",
-				"expression": 0
-			},
-			{
-				"b_type": "ltoez",
 				"expression": 1
 			},
 			{

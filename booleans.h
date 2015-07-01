@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include <stdio.h>
 #include "expressions.h"
 
 #ifndef MCE_BOOLEANS
