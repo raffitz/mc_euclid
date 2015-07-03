@@ -218,7 +218,7 @@ int main(int argc, char** argv){
 #endif
 		}
 		write(picfd,"\"",1);
-		for(int r=0;r<imgw;r++) write(picfd,"|",1);
+		for(int r=0;r<imgh;r++) write(picfd,"|",1);
 		write(picfd,"\"};",3);
 
 		close(picfd);
