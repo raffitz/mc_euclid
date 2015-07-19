@@ -22,12 +22,13 @@ void getconditionarray(union boolean** destarray,int* lgth,char* place, char* na
 int main(int argc, char** argv){
 
 	double width,height,depth;
-	int maxx,maxy,maxz;
-	int imgw,imgh;
+	long int minx,miny,minz;
+	long int maxx,maxy,maxz;
+	long int imgw,imgh;
 
 	int vars[4];
 
-	uint8_t ***picture;
+	//uint8_t ***picture;
 
 	uint8_t argcounter = 0;
 	char argopt;
@@ -121,6 +122,10 @@ int main(int argc, char** argv){
 	height = getdoublevar(solid,"height",the_solid);
 	depth = getdoublevar(solid,"depth",the_solid);
 
+	minx = ceil(getdoublevar(solid,"minx",the_solid) * vars[3]);
+	miny = ceil(getdoublevar(solid,"miny",the_solid) * vars[3]);
+	minz = ceil(getdoublevar(solid,"minz",the_solid) * vars[3]);
+
 		/* Expressions: */
 	getexpressionarray(&expressions,&explength,solid, "expressions", the_solid);
 
@@ -144,20 +149,20 @@ int main(int argc, char** argv){
 
 	/* Calculations: */
 
-	maxx = ceil(width * vars[3]);
-	maxy = ceil(height * vars[3]);
-	maxz = ceil(depth * vars[3]);
+	maxx = minx + ceil(width * vars[3]);
+	maxy = miny + ceil(height * vars[3]);
+	maxz = minz + ceil(depth * vars[3]);
 
-	imgw = 4 * (maxx + 1) + 1;
-	imgh = 4 * (maxy + 1) + 1;
+	imgw = 4 * ((maxx-minx) + 1) + 1;
+	imgh = 4 * ((maxy-miny) + 1) + 1;
 
-	picture = malloc((maxz+1)*sizeof(uint8_t**));
+	//picture = malloc((maxz+1)*sizeof(uint8_t**));
 
 #ifdef MCE_DEBUG
 	printf("\n");
 #endif
 	linebuffer = malloc((imgw+32)*sizeof(char));
-	for(vars[2]=0;vars[2]<=maxz;vars[2]++){
+	for(vars[2]=minz;vars[2]<=maxz;vars[2]++){
 
 		/* File opening: */
 		sprintf(file,"%s/%03d.xpm",dir,vars[2]);
@@ -168,7 +173,7 @@ int main(int argc, char** argv){
 			exit(-1);
 		}
 
-		picture[vars[2]]= malloc((maxx+1)*sizeof(uint8_t*));
+		//picture[vars[2]]= malloc((maxx+1)*sizeof(uint8_t*));
 
 
 		/* Printing Header: */
@@ -176,7 +181,7 @@ int main(int argc, char** argv){
 		write(picfd,linebuffer,strlen(linebuffer));
 		sprintf(linebuffer,"static char * %03d_xpm[] = {\n",vars[2]);
 		write(picfd,linebuffer,strlen(linebuffer));
-		sprintf(linebuffer,"\"%d %d 3 1\",\n",imgh,imgw);
+		sprintf(linebuffer,"\"%ld %ld 3 1\",\n",imgh,imgw);
 		write(picfd,linebuffer,strlen(linebuffer));
 		sprintf(linebuffer,"\"-\tc #ffffff\",\n");
 		write(picfd,linebuffer,strlen(linebuffer));
@@ -185,18 +190,18 @@ int main(int argc, char** argv){
 		sprintf(linebuffer,"\"|\tc #659fdb\",\n");
 		write(picfd,linebuffer,strlen(linebuffer));
 
-		for(vars[0] = 0; vars[0]<= maxx; vars[0]++){
-			picture[vars[2]][vars[0]] = malloc((maxy+1)*sizeof(uint8_t));
+		for(vars[0] = minx; vars[0]<= maxx; vars[0]++){
+			//picture[vars[2]][vars[0]] = malloc((maxy+1)*sizeof(uint8_t));
 			sprintf(linebuffer,"\"");
-			for(vars[1]=0;vars[1]<= maxy; vars[1]++){
+			for(vars[1]=miny;vars[1]<= maxy; vars[1]++){
 				if(bevaluate(&condition,expressions,vars)){
-					picture[vars[2]][vars[0]][vars[1]] = 1;
+					//picture[vars[2]][vars[0]][vars[1]] = 1;
 #ifdef MCE_DEBUG
 					printf("+");
 #endif
 					strcat(linebuffer,"|+++");
 				}else{
-					picture[vars[2]][vars[0]][vars[1]] = 0;
+					//picture[vars[2]][vars[0]][vars[1]] = 0;
 #ifdef MCE_DEBUG
 					printf("-");
 #endif
