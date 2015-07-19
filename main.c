@@ -26,6 +26,8 @@ int main(int argc, char** argv){
 	long int maxx,maxy,maxz;
 	long int imgw,imgh;
 
+	long int filecounter;
+
 	int vars[4];
 
 	//uint8_t ***picture;
@@ -161,11 +163,14 @@ int main(int argc, char** argv){
 #ifdef MCE_DEBUG
 	printf("\n");
 #endif
+
+	filecounter = 0;
+
 	linebuffer = malloc((imgw+32)*sizeof(char));
-	for(vars[2]=minz;vars[2]<=maxz;vars[2]++){
+	for(vars[2]=minz;vars[2]<=maxz;vars[2]++,filecounter++){
 
 		/* File opening: */
-		sprintf(file,"%s/%03d.xpm",dir,vars[2]);
+		sprintf(file,"%s/%03ld.xpm",dir,filecounter);
 		picfd = open(file,O_WRONLY | O_CREAT,S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		if(picfd<0){
 			printf("Error creating \"%s\".\n",file);
