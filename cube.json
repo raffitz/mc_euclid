@@ -3,6 +3,10 @@
 	"height": 1.63299316185545,
 	"depth": 1.73205080756888,
 
+	"minx":-0.707106781186550,
+	"miny":-0.816496580927725,
+	"minz":-0.866025403784440,
+
 	"expressions":[
 		{
 		        "m_type":"sum",
@@ -15,19 +19,9 @@
 		                                        "value": -0.707106781186547
 		                                },
 		                                {
-		                                        "m_type":"sum",
-		                                        "parcels":[
-		                                                {
-		                                                        "m_type": "var",
-		                                                        "index": 0,
-		                                                        "coeff": 1
-		                                                },
-		                                                {
-		                                                        "m_type": "var",
-		                                                        "index": 3,
-		                                                        "coeff": -0.707106781186548
-		                                                }
-		                                        ]
+                                                        "m_type": "var",
+                                                        "index": 0,
+                                                        "coeff": 1
 		                                }
 		                        ]
 		                },
@@ -39,19 +33,9 @@
 		                                        "value": -0.408248290463863
 		                                },
 		                                {
-		                                        "m_type":"sum",
-		                                        "parcels":[
-		                                                {
-		                                                        "m_type": "var",
-		                                                        "index": 1,
-		                                                        "coeff": 1
-		                                                },
-		                                                {
-		                                                        "m_type": "var",
-		                                                        "index": 3,
-		                                                        "coeff": -0.816496580927726
-		                                                }
-		                                        ]
+                                                        "m_type": "var",
+                                                        "index": 1,
+                                                        "coeff": 1
 		                                }
 		                        ]
 		                },
@@ -73,7 +57,7 @@
 		                                                {
 		                                                        "m_type": "var",
 		                                                        "index": 3,
-		                                                        "coeff": -0.000000000000000
+		                                                        "coeff": 0.866025403784440
 		                                                }
 		                                        ]
 		                                }
@@ -94,19 +78,9 @@
 							"value": 0.000000000000000
 						},
 						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 0,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.707106781186548
-								}
-							]
+							"m_type": "var",
+							"index": 0,
+							"coeff": 1
 						}
 					]
 				},
@@ -118,19 +92,9 @@
 							"value": 0.816496580927726
 						},
 						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 1,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.816496580927726
-								}
-							]
+							"m_type": "var",
+							"index": 1,
+							"coeff": 1
 						}
 					]
 				},
@@ -152,7 +116,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -0.000000000000000
+									"coeff": 0.866025403784440
 								}
 							]
 						}
@@ -172,19 +136,9 @@
 							"value": 0.707106781186547
 						},
 						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 0,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.707106781186548
-								}
-							]
+							"m_type": "var",
+							"index": 0,
+							"coeff": 1
 						}
 					]
 				},
@@ -196,19 +150,9 @@
 							"value": -0.408248290463863
 						},
 						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 1,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.816496580927726
-								}
-							]
+							"m_type": "var",
+							"index": 1,
+							"coeff": 1
 						}
 					]
 				},
@@ -230,7 +174,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -0.000000000000000
+									"coeff": 0.866025403784440
 								}
 							]
 						}
@@ -254,19 +198,9 @@
 							"value": 0.000000000000000
 						},
 						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 0,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.707106781186548
-								}
-							]
+							"m_type": "var",
+							"index": 0,
+							"coeff": 1
 						}
 					]
 				},
@@ -278,19 +212,9 @@
 							"value": -0.816496580927726
 						},
 						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 1,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.816496580927726
-								}
-							]
+							"m_type": "var",
+							"index": 1,
+							"coeff": 1
 						}
 					]
 				},
@@ -312,7 +236,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -1.732050807568877
+									"coeff": -0.866025403784440
 								}
 							]
 						}
@@ -332,19 +256,9 @@
 							"value": -0.707106781186547
 						},
 						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 0,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.707106781186548
-								}
-							]
+							"m_type": "var",
+							"index": 0,
+							"coeff": 1
 						}
 					]
 				},
@@ -356,19 +270,9 @@
 							"value": 0.408248290463863
 						},
 						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 1,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.816496580927726
-								}
-							]
+							"m_type": "var",
+							"index": 1,
+							"coeff": 1
 						}
 					]
 				},
@@ -390,7 +294,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -1.732050807568877
+									"coeff": -0.866025403784440
 								}
 							]
 						}
@@ -410,19 +314,9 @@
 							"value": 0.707106781186547
 						},
 						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 0,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.707106781186548
-								}
-							]
+							"m_type": "var",
+							"index": 0,
+							"coeff": 1
 						}
 					]
 				},
@@ -434,19 +328,9 @@
 							"value": 0.408248290463863
 						},
 						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 1,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.816496580927726
-								}
-							]
+							"m_type": "var",
+							"index": 1,
+							"coeff": 1
 						}
 					]
 				},
@@ -468,7 +352,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -1.732050807568877
+									"coeff": -0.866025403784440
 								}
 							]
 						}

@@ -3,116 +3,14 @@
 	"height": 0.866025403784,
 	"depth": 0.816496580928,
 
+	"minx": -0.5,
+	"miny": -0.288675134594813,
+	"minz": -0.204124145231931,
+
 	"expressions":[
 		{
 			"m_type":"sum",
 			"parcels":[
-				{
-					"m_type":"product",
-					"parcels":[
-						{
-							"m_type": "const",
-							"value": 0
-						},
-						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 0,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0
-								}
-							]
-						}
-					]
-				},
-				{
-					"m_type":"product",
-					"parcels":[
-						{
-							"m_type": "const",
-							"value": 0
-						},
-						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 1,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0
-								}
-							]
-						}
-					]
-				},
-				{
-					"m_type":"product",
-					"parcels":[
-						{
-							"m_type": "const",
-							"value": -1
-						},
-						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 2,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0
-								}
-							]
-						}
-					]
-				}
-			]
-		},
-
-
-
-
-
-                {
-			"m_type":"sum",
-			"parcels":[
-				{
-					"m_type":"product",
-					"parcels":[
-						{
-							"m_type": "const",
-							"value": 0
-						},
-						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 0,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0
-								}
-							]
-						}
-					]
-				},
 				{
 					"m_type":"product",
 					"parcels":[
@@ -131,7 +29,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -0
+									"coeff": 0.288675134594813
 								}
 							]
 						}
@@ -155,7 +53,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -0
+									"coeff": 0.204124145231931
 								}
 							]
 						}
@@ -189,7 +87,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -0
+									"coeff": 0.5
 								}
 							]
 						}
@@ -213,7 +111,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -0
+									"coeff": 0.288675134594813
 								}
 							]
 						}
@@ -237,7 +135,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -0
+									"coeff": 0.204124145231931
 								}
 							]
 						}
@@ -266,7 +164,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -1
+									"coeff": -0.5
 								}
 							]
 						}
@@ -290,7 +188,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -0
+									"coeff": 0.288675134594813
 								}
 							]
 						}
@@ -314,7 +212,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -0
+									"coeff": 0.204124145231931
 								}
 							]
 						}
@@ -328,15 +226,15 @@
 		"conditions": [
 			{
 				"b_type": "ltoez",
+				"expression": 0
+			},
+			{
+				"b_type": "ltoez",
 				"expression": 1
 			},
 			{
 				"b_type": "ltoez",
 				"expression": 2
-			},
-			{
-				"b_type": "ltoez",
-				"expression": 3
 			}
 		]
 	}
