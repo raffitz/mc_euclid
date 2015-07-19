@@ -1,0 +1,231 @@
+{
+	"width": 1.618033988749895,
+	"height": 1.538841768587627,
+	"depth": 0,
+
+	"expressions":[
+		{
+			"m_type":"sum",
+			"parcels":[
+				{
+					"m_type":"product",
+					"parcels":[
+						{
+							"m_type": "const",
+							"value": -0.587785252292473
+						},
+						{
+							"m_type":"sum",
+							"parcels":[
+								{
+									"m_type": "var",
+									"index": 0,
+									"coeff": 1
+								},
+								{
+									"m_type": "var",
+									"index": 3,
+									"coeff": -0.809016994374947
+								}
+							]
+						}
+					]
+				},
+				{
+					"m_type":"product",
+					"parcels":[
+						{
+							"m_type": "const",
+							"value": 0.809016994374947
+						},
+						{
+							"m_type":"sum",
+							"parcels":[
+								{
+									"m_type": "var",
+									"index": 1,
+									"coeff": 1
+								},
+								{
+									"m_type": "var",
+									"index": 3,
+									"coeff": -1.538841768587627
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+
+
+
+
+
+                {
+			"m_type":"sum",
+			"parcels":[
+				{
+					"m_type":"product",
+					"parcels":[
+						{
+							"m_type": "const",
+							"value": -0.951056516295154
+						},
+						{
+							"m_type": "var",
+							"index": 0,
+							"coeff": 1
+						}
+					]
+				},
+				{
+					"m_type":"product",
+					"parcels":[
+						{
+							"m_type": "const",
+							"value": -0.309016994374947
+						},
+						{
+							"m_type":"sum",
+							"parcels":[
+								{
+									"m_type": "var",
+									"index": 1,
+									"coeff": 1
+								},
+								{
+									"m_type": "var",
+									"index": 3,
+									"coeff": -0.951056516295154
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+
+
+
+
+
+                {
+			"m_type":"sum",
+			"parcels":[
+				{
+					"m_type":"product",
+					"parcels":[
+						{
+							"m_type": "const",
+							"value": 0.951056516295153
+						},
+						{
+							"m_type":"sum",
+							"parcels":[
+								{
+									"m_type": "var",
+									"index": 0,
+									"coeff": 1
+								},
+								{
+									"m_type": "var",
+									"index": 3,
+									"coeff": -1.309016994374947
+								}
+							]
+						}
+					]
+				},
+				{
+					"m_type":"product",
+					"parcels":[
+						{
+							"m_type": "const",
+							"value": -0.309016994374947
+						},
+						{
+							"m_type": "var",
+							"index": 1,
+							"coeff": 1
+						}
+					]
+				}
+			]
+		},
+                {
+			"m_type":"sum",
+			"parcels":[
+				{
+					"m_type":"product",
+					"parcels":[
+						{
+							"m_type": "const",
+							"value": 0.587785252292473
+						},
+						{
+							"m_type":"sum",
+							"parcels":[
+								{
+									"m_type": "var",
+									"index": 0,
+									"coeff": 1
+								},
+								{
+									"m_type": "var",
+									"index": 3,
+									"coeff": -1.618033988749895
+								}
+							]
+						}
+					]
+				},
+				{
+					"m_type":"product",
+					"parcels":[
+						{
+							"m_type": "const",
+							"value":  0.809016994374947
+						},
+						{
+							"m_type":"sum",
+							"parcels":[
+								{
+									"m_type": "var",
+									"index": 1,
+									"coeff": 1
+								},
+								{
+									"m_type": "var",
+									"index": 3,
+									"coeff": -0.951056516295153
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"condition":{
+		"b_type": "and",
+		"conditions": [
+			{
+				"b_type": "ltoez",
+				"expression": 0
+			},
+			{
+				"b_type": "ltoez",
+				"expression": 1
+			},
+			{
+				"b_type": "ltoez",
+				"expression": 2
+			},
+			{
+				"b_type": "ltoez",
+				"expression": 3
+			}
+		]
+	}
+}
