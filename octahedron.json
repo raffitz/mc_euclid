@@ -3,6 +3,10 @@
 	"height": 1.41421356237309,
 	"depth": 1.41421356237309,
 
+	"minx": -0.707106781186548,
+	"miny": -0.707106781186548,
+	"minz": -0.707106781186548,
+
 	"expressions":[
 		{
 			"m_type":"sum",
@@ -15,19 +19,9 @@
 							"value": -0.5
 						},
 						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 0,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.707106781186547
-								}
-							]
+							"m_type": "var",
+							"index": 0,
+							"coeff": 1
 						}
 					]
 				},
@@ -39,19 +33,9 @@
 							"value": -0.5
 						},
 						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 1,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.707106781186547
-								}
-							]
+							"m_type": "var",
+							"index": 1,
+							"coeff": 1
 						}
 					]
 				},
@@ -73,7 +57,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -0
+									"coeff": 0.707106781186548
 								}
 							]
 						}
@@ -93,19 +77,9 @@
 							"value": -0.5
 						},
 						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 0,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.707106781186547
-								}
-							]
+							"m_type": "var",
+							"index": 0,
+							"coeff": 1
 						}
 					]
 				},
@@ -117,19 +91,9 @@
 							"value": 0.5
 						},
 						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 1,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.707106781186547
-								}
-							]
+							"m_type": "var",
+							"index": 1,
+							"coeff": 1
 						}
 					]
 				},
@@ -151,7 +115,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -0
+									"coeff": 0.707106781186548
 								}
 							]
 						}
@@ -174,19 +138,9 @@
 							"value": 0.5
 						},
 						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 0,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.707106781186547
-								}
-							]
+							"m_type": "var",
+							"index": 0,
+							"coeff": 1
 						}
 					]
 				},
@@ -198,19 +152,9 @@
 							"value": 0.5
 						},
 						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 1,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.707106781186547
-								}
-							]
+							"m_type": "var",
+							"index": 1,
+							"coeff": 1
 						}
 					]
 				},
@@ -232,7 +176,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -0
+									"coeff": 0.707106781186548
 								}
 							]
 						}
@@ -254,19 +198,9 @@
 							"value": 0.5
 						},
 						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 0,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.707106781186547
-								}
-							]
+							"m_type": "var",
+							"index": 0,
+							"coeff": 1
 						}
 					]
 				},
@@ -278,19 +212,9 @@
 							"value": -0.5
 						},
 						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 1,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.707106781186547
-								}
-							]
+							"m_type": "var",
+							"index": 1,
+							"coeff": 1
 						}
 					]
 				},
@@ -312,7 +236,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -0
+									"coeff": 0.707106781186548
 								}
 							]
 						}
@@ -333,19 +257,9 @@
 							"value": -0.5
 						},
 						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 0,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.707106781186547
-								}
-							]
+							"m_type": "var",
+							"index": 0,
+							"coeff": 1
 						}
 					]
 				},
@@ -357,19 +271,9 @@
 							"value": -0.5
 						},
 						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 1,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.707106781186547
-								}
-							]
+							"m_type": "var",
+							"index": 1,
+							"coeff": 1
 						}
 					]
 				},
@@ -391,7 +295,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -1.414213562373095
+									"coeff": -0.707106781186548
 								}
 							]
 						}
@@ -414,19 +318,9 @@
 							"value": -0.5
 						},
 						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 0,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.707106781186547
-								}
-							]
+							"m_type": "var",
+							"index": 0,
+							"coeff": 1
 						}
 					]
 				},
@@ -438,19 +332,9 @@
 							"value": 0.5
 						},
 						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 1,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.707106781186547
-								}
-							]
+							"m_type": "var",
+							"index": 1,
+							"coeff": 1
 						}
 					]
 				},
@@ -472,7 +356,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -1.414213562373095
+									"coeff": -0.707106781186548
 								}
 							]
 						}
@@ -494,19 +378,9 @@
 							"value": 0.5
 						},
 						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 0,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.707106781186547
-								}
-							]
+							"m_type": "var",
+							"index": 0,
+							"coeff": 1
 						}
 					]
 				},
@@ -518,19 +392,9 @@
 							"value": 0.5
 						},
 						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 1,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.707106781186547
-								}
-							]
+							"m_type": "var",
+							"index": 1,
+							"coeff": 1
 						}
 					]
 				},
@@ -552,7 +416,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -1.414213562373095
+									"coeff": -0.707106781186548
 								}
 							]
 						}
@@ -574,19 +438,9 @@
 							"value": 0.5
 						},
 						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 0,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.707106781186547
-								}
-							]
+							"m_type": "var",
+							"index": 0,
+							"coeff": 1
 						}
 					]
 				},
@@ -598,19 +452,9 @@
 							"value": -0.5
 						},
 						{
-							"m_type":"sum",
-							"parcels":[
-								{
-									"m_type": "var",
-									"index": 1,
-									"coeff": 1
-								},
-								{
-									"m_type": "var",
-									"index": 3,
-									"coeff": -0.707106781186547
-								}
-							]
+							"m_type": "var",
+							"index": 1,
+							"coeff": 1
 						}
 					]
 				},
@@ -632,7 +476,7 @@
 								{
 									"m_type": "var",
 									"index": 3,
-									"coeff": -1.414213562373095
+									"coeff": -0.707106781186548
 								}
 							]
 						}
