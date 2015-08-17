@@ -186,11 +186,13 @@ int main(int argc, char** argv){
 		write(picfd,linebuffer,strlen(linebuffer));
 		sprintf(linebuffer,"static char * %03d_xpm[] = {\n",vars[2]);
 		write(picfd,linebuffer,strlen(linebuffer));
-		sprintf(linebuffer,"\"%ld %ld 3 1\",\n",imgh,imgw);
+		sprintf(linebuffer,"\"%ld %ld 4 1\",\n",imgh,imgw);
 		write(picfd,linebuffer,strlen(linebuffer));
 		sprintf(linebuffer,"\"-\tc #ffffff\",\n");
 		write(picfd,linebuffer,strlen(linebuffer));
 		sprintf(linebuffer,"\"+\tc #000000\",\n");
+		write(picfd,linebuffer,strlen(linebuffer));
+		sprintf(linebuffer,"\"r\tc #ff0000\",\n");
 		write(picfd,linebuffer,strlen(linebuffer));
 		sprintf(linebuffer,"\"|\tc #659fdb\",\n");
 		write(picfd,linebuffer,strlen(linebuffer));
@@ -199,6 +201,13 @@ int main(int argc, char** argv){
 			//picture[vars[2]][vars[0]] = malloc((maxy+1)*sizeof(uint8_t));
 			sprintf(linebuffer,"\"");
 			for(vars[1]=miny;vars[1]<= maxy; vars[1]++){
+				if(vars[0]==0 && vars[1]==0 && vars[2]==0){
+#ifdef MCE_DEBUG
+					printf("*");
+#endif
+					strcat(linebuffer,"|rrr");
+					continue;
+				}
 				if(bevaluate(&condition,expressions,vars)){
 					//picture[vars[2]][vars[0]][vars[1]] = 1;
 #ifdef MCE_DEBUG
