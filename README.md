@@ -6,23 +6,9 @@ The blueprints are to be used in voxel-based games (e.g. Minecraft).
 
 ## Usage
 
->$ ./mc_euclid -s [solid] -o [dir] -f [scale]
+>$ ./mc_euclid -s [shape] -o [dir] -f [scale]
 
->		solid:	 The euclidean solid to be generated.
-
->			Accepted solids are:
-
->				cube.json		A cube (diagonally posed)
-
->				sphere.json		A sphere
-
->				torus.json		A torus with a 1/3 whole
-
->				torus2.json		A torus with a 1/2 whole
-
->				tetrahedron.json	A tetrahedron
-
->				rightcube.json		An upright cube (PoC)
+>		shape:	 The euclidean shape to be mapped
 
 >		dir:	 The directory where the maps will go
 
@@ -33,3 +19,53 @@ The blueprints are to be used in voxel-based games (e.g. Minecraft).
 The output consists of a folder with the desired plans within, in *.xpm* format.
 
 Each layer has its own blueprint, and therefore its own image.
+
+## Current Shapes
+
+#### Sphere
+
+A sphere
+
+#### Torus
+
+A torus where the radius of the tube is 1/4th the radius of the entire torus
+
+#### Torus2
+
+A torus where the radius of the tube is 1/3rd the radius of the entire torus
+
+#### RightCube
+
+A simple cube stood on its face (rather pointless)
+
+#### Cube
+
+A cube stood on one of its vertices
+
+#### Tetrahedron
+
+A tetrahedron stood on one of its faces (for it to be stood on its top vertex, you need only read the maps in reverse order)
+
+#### Octahedron
+
+An octahedron stood on one of its vertices (rather pointless as well)
+
+#### Dodecahedron
+
+A dodecahedron stood on one of its faces
+
+#### Icosahedron
+
+An icosahedron stood on one of its faces
+
+#### Dodecahedron (dual)
+
+A dodecahedron stood on one of its vertices, made from the duality of the icosahedron
+
+#### Icosahedron (dual)
+
+An icosahedron stood on one of its vertices, made from the duality of the dodecahedron
+
+#### Pentagon
+
+A 2D shape, a regular pentagon

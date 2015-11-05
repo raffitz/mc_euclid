@@ -252,13 +252,6 @@ int main(int argc, char** argv){
 void usage(char* name){
 	printf("Usage: %s -s [solid] -o [dir] -f [scale]\n"
 		"\tsolid:\t The euclidean solid to be generated.\n"
-		"\t\tAccepted solids are:\n"
-		"\t\t\tcube.json\t\tA cube (diagonally posed)\n"
-		"\t\t\tsphere.json\t\tA sphere\n"
-		"\t\t\ttorus.json\t\tA torus with a 1/3 whole\n"
-		"\t\t\ttorus2.json\t\tA torus with a 1/2 whole\n"
-		"\t\t\ttetrahedron.json\tA tetrahedron\n"
-		"\t\t\trightcube.json\t\tAn upright cube (PoC)\n"
 		"\tdir:\t The directory where the maps will go\n"
 		"\tscale:\t The scale factor of the solid\n\n",
 		name);
