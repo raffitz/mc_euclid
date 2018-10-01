@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "expressions.h"
 #include "conditions.h"
 #include "parser.tab.h"
@@ -22,6 +23,10 @@ extern FILE* yyin;
 int main(int argc, char** argv){
 	FILE* inputfile;
 	int scale;
+	int min_x,min_y,min_z,max_x,max_y,max_z;
+	int x,y,z;
+	struct mce_condition* aux;
+	int counter;
 
 	if (argc != 3) {
 		fprintf(stderr,"Missing file name and/or scale\n");
@@ -47,11 +52,51 @@ int main(int argc, char** argv){
 
 	yyparse();
 
-	printf("%s\n%s\n%s\n\n%lf,%lf,%lf\n%lf,%lf,%lf\n\n%d\n",
+	printf("%s\n%s\n%s\n\n%lf,%lf,%lf\n%lf,%lf,%lf\n\n%d\n\n",
 			mce_solid_name, mce_solid_author, mce_solid_description,
 			mce_def_width, mce_def_height, mce_def_depth,
 			mce_def_min_x, mce_def_min_y, mce_def_min_z,
 			scale);
+
+	min_x = floor(mce_def_min_x);
+	min_y = floor(mce_def_min_y);
+	min_z = floor(mce_def_min_z);
+
+	max_x = min_x + ceil(mce_def_width);
+	max_y = min_y + ceil(mce_def_height);
+	max_z = min_z + ceil(mce_def_depth);
+
+	printf("%d,%d,%d\n%d,%d,%d\n\n",min_x,min_y,min_z,max_x,max_y,max_z);
+
+	for(z = min_z; z <= max_z; z++){
+		for(y = min_y; y <= max_y; y++){
+			for(x = min_x; x <= max_x; x++){
+				def_vars.x = x;
+				def_vars.y = y;
+				def_vars.z = z;
+
+				aux = first;
+
+				counter = 0;
+				while(aux != NULL){
+					if (mce_check(aux,def_vars)==0){
+						counter++;
+						break;
+					}
+					aux = (*aux).next;
+				}
+				if (counter == 0){
+					putchar(' ');
+				}else{
+					putchar('X');
+				}
+			}
+			putchar('\n');
+		}
+		putchar('\n');
+	}
+
+	return 0;
 }
 
 void yyerror(char* content){
