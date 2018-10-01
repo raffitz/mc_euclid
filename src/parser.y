@@ -7,14 +7,14 @@
 int yylex();
 int yyerror(char*);
 
-double width, height, depth;
-double minx, miny, minz;
-uint8_t checks = 0;
+double mce_def_width, mce_def_height, mce_def_depth;
+double mce_def_min_x, mce_def_min_y, mce_def_min_z;
+uint8_t mce_definition_check = 0;
 
 struct mce_condition* first = NULL;
 struct mce_condition* last = NULL;
 
-extern struct mce_vars vars;
+struct mce_vars def_vars;
 
 %}
 
@@ -61,12 +61,12 @@ expression:	expression MCE_TOKEN_ADD expression	{ $$ = mce_add($1,$3); }
 	|	MCE_TOKEN_LPAREN expression MCE_TOKEN_RPAREN	{ $$ = $2; }
 	;
 
-definition:	MCE_TOKEN_SETWIDTH expression	{ width = mce_resolve_def($2, vars); checks = checks | 1; }
-	|	MCE_TOKEN_SETHEIGHT expression	{ height = mce_resolve_def($2, vars); checks = checks | 2; }
-	|	MCE_TOKEN_SETDEPTH expression	{ depth = mce_resolve_def($2, vars); checks = checks | 4; }
-	|	MCE_TOKEN_SETMINX expression	{ minx = mce_resolve_def($2, vars); checks = checks | 8; }
-	|	MCE_TOKEN_SETMINY expression	{ miny = mce_resolve_def($2, vars); checks = checks | 16; }
-	|	MCE_TOKEN_SETMINZ expression	{ minz = mce_resolve_def($2, vars); checks = checks | 32; }
+definition:	MCE_TOKEN_SETWIDTH expression	{ mce_def_width = mce_resolve_def($2, def_vars); mce_definition_check = mce_definition_check | 1; }
+	|	MCE_TOKEN_SETHEIGHT expression	{ mce_def_height = mce_resolve_def($2, def_vars); mce_definition_check = mce_definition_check | 2; }
+	|	MCE_TOKEN_SETDEPTH expression	{ mce_def_depth = mce_resolve_def($2, def_vars); mce_definition_check = mce_definition_check | 4; }
+	|	MCE_TOKEN_SETMINX expression	{ mce_def_min_x = mce_resolve_def($2, def_vars); mce_definition_check = mce_definition_check | 8; }
+	|	MCE_TOKEN_SETMINY expression	{ mce_def_min_y = mce_resolve_def($2, def_vars); mce_definition_check = mce_definition_check | 16; }
+	|	MCE_TOKEN_SETMINZ expression	{ mce_def_min_z = mce_resolve_def($2, def_vars); mce_definition_check = mce_definition_check | 32; }
 	;
 
 condition:	expression MCE_TOKEN_CONDITION expression	{ mce_condition_at_end($2, $1, $3, &first, &last); };

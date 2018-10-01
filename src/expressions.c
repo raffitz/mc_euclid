@@ -37,7 +37,7 @@ union mce_expression* mce_binary(enum mce_binary_type op, union mce_expression* 
 	(*pointer).id.type = MCE_EXP_BIN;
 	(*pointer).binary.operation = op;
 	(*pointer).binary.left = left;
-	(*pointer).binary.right = left;
+	(*pointer).binary.right = right;
 
 	return pointer;
 }
