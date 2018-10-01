@@ -1,0 +1,15 @@
+%name: sphere
+%author: raffitz
+%description: A sphere
+
+# Bounding box and expression are self-explanatory
+
+width: s
+height: s
+depth: s
+
+min_x: 0 - s / 2
+min_y: 0 - s / 2
+min_z: 0 - s / 2
+
+x^2 + y^2 + z^2 <= (s/2)^2
