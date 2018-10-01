@@ -4,15 +4,17 @@ Building blueprint generator for euclidean objects defined by polynomial equatio
 
 The blueprints are to be used in voxel-based games (e.g. Minecraft).
 
-## Usage
+## Build
 
->$ ./mc_euclid -s [shape] -o [dir] -f [scale]
+> cd src && make
 
->		shape:	 The euclidean shape to be mapped
+## Options
 
->		dir:	 The directory where the maps will go
-
->		scale:	 The scale factor of the solid
+ - [x] `-a`, `--ascii`: ascii output to cli (default)
+ - [ ] `-w`, `--wide`: wide ascii output to cli (default)
+ - [ ] `-x`, `--xpm`: xpm output
+ - [ ] `-g`, `--grid`: grid
+ - [ ] `-l`, `--label`: label
 
 ## Output
 
@@ -33,10 +35,6 @@ A torus where the radius of the tube is 1/4th the radius of the entire torus
 #### Torus2
 
 A torus where the radius of the tube is 1/3rd the radius of the entire torus
-
-#### RightCube
-
-A simple cube stood on its face (rather pointless)
 
 #### Cube
 
