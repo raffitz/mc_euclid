@@ -1,0 +1,6 @@
+*.o
+*.yy.h
+*.yy.c
+*.tab.h
+*.tab.c
+mc_euclid
