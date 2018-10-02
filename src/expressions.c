@@ -62,6 +62,16 @@ union mce_expression* mce_sub(union mce_expression* minuend, union mce_expressio
 	return mce_binary(MCE_BIN_SUB, minuend, subtrahend);
 }
 
+union mce_expression* mce_unary(enum mce_unary_type fn, union mce_expression* argument){
+	union mce_expression* pointer = mce_new();
+
+	(*pointer).id.type = MCE_EXP_UNA;
+	(*pointer).unary.function = fn;
+	(*pointer).unary.argument = argument;
+
+	return pointer;
+}
+
 double mce_resolve_super(union mce_expression* root, struct mce_vars vars, uint8_t allow_xyz){
 	double cartesian_vars;
 
@@ -104,6 +114,22 @@ double mce_resolve_super(union mce_expression* root, struct mce_vars vars, uint8
 					return mce_resolve_super((*root).binary.left, vars, allow_xyz) - mce_resolve_super((*root).binary.right, vars, allow_xyz);
 				default:
 					fprintf(stderr,"Unrecognised binary operation\n");
+					exit(-1);
+			}
+		case MCE_EXP_UNA:
+			switch((*root).unary.function){
+				case MCE_UNA_SIN:
+					return sin(mce_resolve_super((*root).unary.argument,vars,allow_xyz));
+				case MCE_UNA_COS:
+					return cos(mce_resolve_super((*root).unary.argument,vars,allow_xyz));
+				case MCE_UNA_TAN:
+					return tan(mce_resolve_super((*root).unary.argument,vars,allow_xyz));
+				case MCE_UNA_SQRT:
+					return sqrt(mce_resolve_super((*root).unary.argument,vars,allow_xyz));
+				case MCE_UNA_CBRT:
+					return cbrt(mce_resolve_super((*root).unary.argument,vars,allow_xyz));
+				default:
+					fprintf(stderr,"Unrecognised unary operation\n");
 					exit(-1);
 			}
 		default:

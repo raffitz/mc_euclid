@@ -11,7 +11,8 @@ enum mce_variable {
 enum mce_expression_type {
 	MCE_EXP_VAL,
 	MCE_EXP_VAR,
-	MCE_EXP_BIN
+	MCE_EXP_BIN,
+	MCE_EXP_UNA
 };
 
 enum mce_binary_type {
@@ -20,6 +21,14 @@ enum mce_binary_type {
 	MCE_BIN_DIV,
 	MCE_BIN_ADD,
 	MCE_BIN_SUB
+};
+
+enum mce_unary_type {
+	MCE_UNA_SIN,
+	MCE_UNA_COS,
+	MCE_UNA_TAN,
+	MCE_UNA_SQRT,
+	MCE_UNA_CBRT
 };
 
 struct mce_expression_id {
@@ -43,11 +52,18 @@ struct mce_expression_binary {
 	union mce_expression* right;
 };
 
+struct mce_expression_unary {
+	enum mce_expression_type type;
+	enum mce_unary_type function;
+	union mce_expression* argument;
+};
+
 union mce_expression {
 	struct mce_expression_id id;
 	struct mce_expression_val val;
 	struct mce_expression_var var;
 	struct mce_expression_binary binary;
+	struct mce_expression_unary unary;
 };
 
 struct mce_vars {
@@ -64,6 +80,7 @@ union mce_expression* mce_mul(union mce_expression* left, union mce_expression* 
 union mce_expression* mce_div(union mce_expression* dividend, union mce_expression* divisor);
 union mce_expression* mce_add(union mce_expression* left, union mce_expression* right);
 union mce_expression* mce_sub(union mce_expression* minuend, union mce_expression* subtrahend);
+union mce_expression* mce_unary(enum mce_unary_type fn, union mce_expression* argument);
 
 double mce_resolve_def(union mce_expression* root, struct mce_vars vars);
 double mce_resolve(union mce_expression* root, struct mce_vars vars);

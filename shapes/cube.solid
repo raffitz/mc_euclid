@@ -24,7 +24,7 @@
 # We know as a corollary of Pythagoras's theorem that the diagonal of a square
 # of side s is sqrt(2)*s.
 
-width: 2^(1/2) * s
+width: sqrt 2 * s
 
 # Figure 2:
 #          _*__         -
@@ -43,7 +43,7 @@ width: 2^(1/2) * s
 # From Pythagoras's theorem we know that the diagonal of a cube of side s is
 # sqrt((sqrt(2)^2)s^2 + s^2) = sqrt(3)*s.
 
-depth: 3^(1/2) * s
+depth: sqrt 3 * s
 
 # If we consider the x = 0 section of the image above, we get the following:
 # Figure 3:
@@ -67,15 +67,15 @@ depth: 3^(1/2) * s
 # From that, we get that a = (2/3)^(1/2)*s, b = (2*s)/(3^(1/2)), c = s/(3^(1/2))
 # And we know that height = 2 * a
 
-height: 2*((2/3)^(1/2))*s
+height: 2 * sqrt(2/3) * s
 
 # Cube bounding box position:
 
 # Considering that the cube's center is the origin, we just need to negate and
 # half the bounding box sizes to get the minimum boundaries for each variable.
-min_x: 0 - (s * 2^(1/2)) / 2
-min_y: 0 - (s * (2/3)^(1/2))
-min_z: 0 - (s * 3^(1/2)) / 2
+min_x: 0 - (s * sqrt 2) / 2
+min_y: 0 - (s * sqrt (2/3))
+min_z: 0 - (s * sqrt 3) / 2
 
 # The cube is the intersection of 6 semi-spaces.
 # Each semi-space is defined by an inequality based on the plane that defines
@@ -97,18 +97,18 @@ min_z: 0 - (s * 3^(1/2)) / 2
 # the s and get the following:
 # y * (0 - (2/3) ^ (1/2)) + ((1/3) ^ (1/2)) * z <= s / 2
 
-y * (0 - (2/3) ^ (1/2)) + ((1/3) ^ (1/2)) * z <= s / 2
+y * (0 - sqrt (2/3)) + sqrt(1/3) * z <= s / 2
 
 # By using the same point and rotating the vector by +-120 degrees or +-2*pi/3
 # radians, we get the following two plane inequalities.
 
-x * (0 - (2 ^ (1/2))/2) + y * ((1/6) ^ (1/2)) + ((1/3) ^ (1/2)) * z <= s / 2
-x * ((2 ^ (1/2))/2) + y * ((1/6) ^ (1/2)) + ((1/3) ^ (1/2)) * z <= s / 2
+x * (0 - sqrt 2/2) + y * sqrt(1/6) + sqrt(1/3) * z <= s / 2
+x * sqrt 2/2 + y * sqrt(1/6) + sqrt(1/3) * z <= s / 2
 
 # By replacing the point with (0,0,0-(s * 3^(1/2))/2) and scaling each of the
 # three vectors by (-1), we get the remaining three plane inequalities.
 
-y * ((2/3) ^ (1/2)) - ((1/3) ^ (1/2)) * z <= s / 2
-x * (0 - (2 ^ (1/2))/2) - y * ((1/6) ^ (1/2)) - ((1/3) ^ (1/2)) * z <= s / 2
-x * ((2 ^ (1/2))/2) - y * ((1/6) ^ (1/2)) - ((1/3) ^ (1/2)) * z <= s / 2
+y * sqrt(2/3) - sqrt(1/3) * z <= s / 2
+x * (0 - sqrt 2/2) - y * sqrt(1/6) - sqrt(1/3) * z <= s / 2
+x * sqrt 2/2 - y * sqrt(1/6) - sqrt(1/3) * z <= s / 2
 

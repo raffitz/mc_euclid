@@ -3,6 +3,7 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <math.h>
 #include "expressions.h"
 #include "conditions.h"
 #include "parser.tab.h"
@@ -37,6 +38,13 @@ char* mce_solid_description;
 "x"	{ yylval.var = MCE_VAR_X; return MCE_TOKEN_VARIABLE; }
 "y"	{ yylval.var = MCE_VAR_Y; return MCE_TOKEN_VARIABLE; }
 "z"	{ yylval.var = MCE_VAR_Z; return MCE_TOKEN_VARIABLE; }
+"sin"	{ yylval.fun = MCE_UNA_SIN; return MCE_TOKEN_FUN; }
+"cos"	{ yylval.fun = MCE_UNA_COS; return MCE_TOKEN_FUN; }
+"tan"	{ yylval.fun = MCE_UNA_TAN; return MCE_TOKEN_FUN; }
+"sqrt"	{ yylval.fun = MCE_UNA_SQRT; return MCE_TOKEN_FUN; }
+"cbrt"	{ yylval.fun = MCE_UNA_CBRT; return MCE_TOKEN_FUN; }
+"pi"	{ yylval.num = M_PI; return MCE_TOKEN_NUMBER; }
+"tau"	{ yylval.num = M_PI * 2; return MCE_TOKEN_NUMBER; }
 "("	{ return MCE_TOKEN_LPAREN; }
 ")"	{ return MCE_TOKEN_RPAREN; }
 "^"	{ return MCE_TOKEN_POW; }

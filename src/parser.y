@@ -23,6 +23,7 @@ struct mce_vars def_vars;
 	enum mce_variable var;
 	union mce_expression* exp;
 	enum mce_conditions_type cond;
+	enum mce_unary_type fun;
 }
 
 %token MCE_TOKEN_SETWIDTH
@@ -46,6 +47,8 @@ struct mce_vars def_vars;
 %left MCE_TOKEN_DIV
 %left MCE_TOKEN_POW
 
+%nonassoc <fun> MCE_TOKEN_FUN
+
 %type <exp> expression
 
 %start lines
@@ -56,6 +59,7 @@ expression:	expression MCE_TOKEN_ADD expression	{ $$ = mce_add($1,$3); }
 	|	expression MCE_TOKEN_MUL expression	{ $$ = mce_mul($1,$3); }
 	|	expression MCE_TOKEN_DIV expression	{ $$ = mce_div($1,$3); }
 	|	expression MCE_TOKEN_POW expression	{ $$ = mce_pow($1,$3); }
+	|	MCE_TOKEN_FUN expression	{ $$ = mce_unary($1,$2); }
 	|	MCE_TOKEN_NUMBER	{ $$ = mce_val($1); }
 	|	MCE_TOKEN_VARIABLE	{ $$ = mce_var($1); }
 	|	MCE_TOKEN_LPAREN expression MCE_TOKEN_RPAREN	{ $$ = $2; }
