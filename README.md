@@ -11,16 +11,16 @@ The blueprints are to be used in voxel-based games (e.g. Minecraft).
 ## Options
 
  - [x] `-a`, `--ascii`: ascii output to cli (default)
+ - [ ] `-u`, `--unicode`: unicode output to cli (default)
  - [ ] `-w`, `--wide`: wide ascii output to cli (default)
  - [ ] `-x`, `--xpm`: xpm output
+ - [ ] `-s`, `--svg`: svg output
  - [ ] `-g`, `--grid`: grid
  - [ ] `-l`, `--label`: label
 
 ## Output
 
-The output consists of a folder with the desired plans within, in *.xpm* format.
-
-Each layer has its own blueprint, and therefore its own image.
+The output consists of a series of images, each depicting a layer of the solid.
 
 ## Current Shapes
 
