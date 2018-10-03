@@ -69,7 +69,7 @@ int main(int argc, char** argv){
 	printf("%d,%d,%d\n%d,%d,%d\n\n",min_x,min_y,min_z,max_x,max_y,max_z);
 
 	for(z = min_z; z <= max_z; z++){
-		for(y = min_y; y <= max_y; y++){
+		for(y = max_y; y >= min_y; y--){
 			for(x = min_x; x <= max_x; x++){
 				def_vars.x = x;
 				def_vars.y = y;
@@ -86,9 +86,9 @@ int main(int argc, char** argv){
 					aux = (*aux).next;
 				}
 				if (counter == 0){
-					putchar(' ');
-				}else{
 					putchar('X');
+				}else{
+					putchar(' ');
 				}
 			}
 			putchar('\n');
