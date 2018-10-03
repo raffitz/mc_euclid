@@ -3,4 +3,7 @@
 *.yy.c
 *.tab.h
 *.tab.c
+cmdline.c
+cmdline.h
+cmdline.ggo
 mc_euclid

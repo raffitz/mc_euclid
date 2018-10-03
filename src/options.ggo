@@ -1,0 +1,18 @@
+package "mc_euclid"
+version "2.0.0"
+purpose "An euclidean object blueprint generator for voxel-based games"
+versiontext "Generated from commit COMMIT_ID"
+
+args "--unamed-opts --show-required"
+
+option "scale" s "The scale factor to be used"
+	int required
+
+option "output-format" o "The output format"
+	values="cli-ascii","cli-utf8","xpm" enum optional
+
+option "grid" g "Include grid on output"
+	flag off
+
+option "label" l "Include labels on output"
+	flag off

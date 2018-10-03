@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "cmdline.h"
 #include "expressions.h"
 #include "conditions.h"
 #include "parser.tab.h"
@@ -21,79 +22,115 @@ extern struct mce_vars def_vars;
 extern FILE* yyin;
 
 int main(int argc, char** argv){
+	struct gengetopt_args_info args;
+
 	FILE* inputfile;
-	int scale;
-	int min_x,min_y,min_z,max_x,max_y,max_z;
+
+	int file_iterator;
+
+	int min_x, min_y, min_z;
+	int width, height, depth;
+	int max_x, max_y, max_z;
 	int x,y,z;
+
+	uint8_t* data;
+
 	struct mce_condition* aux;
 	int counter;
 
-	if (argc != 3) {
-		fprintf(stderr,"Missing file name and/or scale\n");
-		exit(-1);
+	if (cmdline_parser(argc, argv, &args) < 0){
+		fprintf(stderr,"Error parsing options");
 	}
 
-	if (sscanf(argv[2],"%d",&scale) != 1){
-		fprintf(stderr,"Error parsing scale <%s>\n",argv[2]);
-		exit(-1);
-	}
+	def_vars.s = args.scale_arg;
 
-	inputfile = fopen(argv[1],"r");
+	for (file_iterator = 0; file_iterator < args.inputs_num; file_iterator++){
+		inputfile = fopen(args.inputs[file_iterator],"r");
 
-	if (inputfile == NULL){
-		perror(argv[0]);
-		fprintf(stderr,"Error opening file <%s>\n",argv[1]);
-		exit(-1);
-	}
+		if (inputfile == NULL){
+			perror(argv[0]);
+			fprintf(stderr,"Error opening file <%s>\n",argv[1]);
+			exit(-1);
+		}
 
-	def_vars.s = scale;
 
-	yyin = inputfile;
+		yyin = inputfile;
 
-	yyparse();
+		yyparse();
 
-	printf("%s\n%s\n%s\n\n%lf,%lf,%lf\n%lf,%lf,%lf\n\n%d\n\n",
-			mce_solid_name, mce_solid_author, mce_solid_description,
-			mce_def_width, mce_def_height, mce_def_depth,
-			mce_def_min_x, mce_def_min_y, mce_def_min_z,
-			scale);
+		/*
+		printf("%s\n%s\n%s\n\n%lf,%lf,%lf\n%lf,%lf,%lf\n\n%d\n\n",
+				mce_solid_name, mce_solid_author, mce_solid_description,
+				mce_def_width, mce_def_height, mce_def_depth,
+				mce_def_min_x, mce_def_min_y, mce_def_min_z,
+				scale);
+		*/
 
-	min_x = floor(mce_def_min_x);
-	min_y = floor(mce_def_min_y);
-	min_z = floor(mce_def_min_z);
+		min_x = round(mce_def_min_x);
+		min_y = round(mce_def_min_y);
+		min_z = round(mce_def_min_z);
 
-	max_x = min_x + ceil(mce_def_width);
-	max_y = min_y + ceil(mce_def_height);
-	max_z = min_z + ceil(mce_def_depth);
+		width = ceil(mce_def_width);
+		height = ceil(mce_def_height);
+		depth = ceil(mce_def_depth);
 
-	printf("%d,%d,%d\n%d,%d,%d\n\n",min_x,min_y,min_z,max_x,max_y,max_z);
+		max_x = min_x + width;
+		max_y = min_y + height;
+		max_z = min_z + depth;
 
-	for(z = min_z; z <= max_z; z++){
-		for(y = max_y; y >= min_y; y--){
-			for(x = min_x; x <= max_x; x++){
-				def_vars.x = x;
-				def_vars.y = y;
-				def_vars.z = z;
+		data = (uint8_t*)
+			malloc(depth * height * width * sizeof(uint8_t));
+		if (data == NULL){
+			fprintf(stderr,"Error allocating memory\n");
+			exit(-1);
+		}
 
-				aux = first;
+		/*
+		printf("%d,%d,%d\n%d,%d,%d\n\n",min_x,min_y,min_z,max_x,max_y,max_z);
+		*/
 
-				counter = 0;
-				while(aux != NULL){
-					if (mce_check(aux,def_vars)==0){
-						counter++;
-						break;
+		/* TODO Implement different output formats */
+
+		for(z = min_z; z <= max_z; z++){
+			putchar('*');
+			for (x = min_x; x <= max_x; x++) putchar('-');
+			putchar('*');
+			putchar('\n');
+			for(y = max_y; y >= min_y; y--){
+				putchar('|');
+				for(x = min_x; x <= max_x; x++){
+					def_vars.x = x;
+					def_vars.y = y;
+					def_vars.z = z;
+
+					aux = first;
+
+					counter = 0;
+					while(aux != NULL){
+						if (mce_check(aux,def_vars)==0){
+							counter++;
+							break;
+						}
+						aux = (*aux).next;
 					}
-					aux = (*aux).next;
+					if (counter == 0){
+						putchar('X');
+					}else{
+						putchar(' ');
+					}
 				}
-				if (counter == 0){
-					putchar('X');
-				}else{
-					putchar(' ');
-				}
+				putchar('|');
+				putchar('\n');
 			}
+			putchar('*');
+			for (x = min_x; x <= max_x; x++) putchar('-');
+			putchar('*');
 			putchar('\n');
 		}
-		putchar('\n');
+
+		fclose(inputfile);
+
+		/* TODO: Free all data structures in between files */
 	}
 
 	return 0;
