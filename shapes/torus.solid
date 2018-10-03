@@ -1,0 +1,13 @@
+%name: torus
+%author: raffitz
+%description: A torus where the radius of the tube is 1/4th the radius of the entire torus
+
+width: s
+height: s
+depth: s/4
+
+min_x: 0 - s / 2
+min_y: 0 - s / 2
+min_z: 0 - s / 8
+
+(s*(-3/8) + sqrt(x^2 + y^2))^2 + z^2 < (s/8)^2
