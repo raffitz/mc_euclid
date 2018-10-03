@@ -41,38 +41,65 @@ width: 2 * s * cos(pi/5)
 height: s * (sin(pi/5) + sin(2 * (pi/5)))
 depth: 0
 
+# The easiest way to get the coordinates for the vertices of the pentagon is to
+# consider the circumference that circumscribes it.
+#
+# Figure 3: Radius of the circumscribing circumference
+#            0*
+#            /|\
+#           / | \
+#          /  |  \
+#         /   |7  \
+#       5*----*----*6
+#
+# Keeping consistent with the naming of Figure 2, we know that
+#  i)	5-6 is s
+#  ii)	5-7 = 7-6 = s/2
+#  iii)	the angles 5-0-7 and 7-0-6 are identical and equal 2π/10=π/5
+#  iv)	from [i-iii] we get that the radius is 0-5 = s/(2*sin(π/5))
+#  v)	from [1-iii] we get that 0-7 is s / (2*tan(π/5))
+#
+#  The min_y coordinate is - s / (2*tan(π/5))
 min_x: 0 - s * cos(pi/5)
-min_y: 0 - (1/2) * s * (sin(pi/5) + sin(2 * (pi/5)))
+min_y: 0 - s / (2*tan(pi/5))
 min_z: 0
 
-# The vertices of the pentagon are (r * cos(α),r * sin(α)),
-#  where α = π/2 + 2kπ/5, k ∈ [0,4]
-#  and r * sin(π/5) = s <=> r = s / sin(π/5)
-# The planes' outward vectors are (cos(β),sin(β)),
-#  where β = π/2 + π/5 + 2kπ/5, k ∈ [0,4]
 
-# Top two edges:
-#	Vertex: α = π/2, (0,s / sin(π/5))
-#	Vector 1: β = π/2 - π/5, (cos(β),sin(β))
-cos(3*pi/10) * x + sin(3*pi/10) * (y - (s/(sin(pi/5)))) < 0
-#	Vector 2: β = π/2 + π/5, (cos(β),sin(β))
-cos(7*pi/10) * x + sin(7*pi/10) * (y - (s/(sin(pi/5)))) < 0
+# First Side:
+#	Vertex Angle: π/10
+#	Vertex: (s*cos(π/10)/(2*sin(π/5)),s*sin(π/10)/(2*sin(π/5)))
+#	Normal Angle: 3π/10
+#	Normal: (cos(3π/10),sin(3π/10))
+cos(3*pi/10) * (x - s * cos(pi/10)/(2*sin(pi/5))) + sin(3*pi/10) * (y - s * sin(pi/10)/(2*sin(pi/5))) < 0
 
-# Next two edges:
-#	Vertex 1: α = π/2 + 2π/5, (s * cos(π/2 + 2π/5)/sin(π/5),
-#		s * sin(π/2 + 2π/5)/sin(π/5))
-#	Vector 1: β = π/2 + 3π/5, (cos(β),sin(β))
-cos(11*pi/10)*(x+(s*cos(9*pi/5)/sin(pi/5)))+sin(11*pi/10)*(y+(s*sin(9*pi/5)/sin(pi/5))) < 0
-#	Vertex 2: α = π/2 - 2π/5, (s * cos(π/2 - 2π/5)/sin(π/5),
-#		s * sin(π/2 - 2π/5)/sin(π/5))
-#	Vector 2: β = π/2 - 3π/5, (cos(β),sin(β))
-cos(pi/10)*(x-(s*cos(pi/5)/sin(pi/5)))-sin(pi/10)*(y-(s*sin(pi/5)/sin(pi/5))) < 0
+# Second Side:
+#	Vertex Angle: π/2
+#	Vertex: (0,s/(2*sin(π/5)))
+#	Normal Angle: 7π/10
+#	Normal: (cos(7π/10),sin(7π/10)) = (-cos(3π/10),sin(3π/10))
+0 - cos(3*pi/10) * x + sin(3*pi/10) * (y - s/(2*sin(pi/5))) < 0
 
-# Final edge:
-#	Vertex 2: α = π/2 + 4π/5, (s * cos(π/2 + 4π/5)/sin(π/5),
-#		s * sin(π/2 + 4π/5)/sin(π/5))
-#	Vector 2: β = π/2 - 5π/5 = π, (0,-1)
-# - (y - (s * sin(13 * pi / 10) / sin(pi/5))) < 0
-# - y + (s * sin(13 * pi / 10) / sin(pi/5)) < 0
-# y > (s * sin(13 * pi / 10) / sin(pi/5))
-y > (s * sin(13 * pi / 10) / sin(pi/5))
+# Third Side:
+#	Vertex Angle: 9π/10
+#	Vertex: (s*cos(9π/10)/(2*sin(π/5)),s*sin(9π/10)/(2*sin(π/5))) =
+#		(-s*cos(π/10)/(2*sin(π/5)),s*sin(π/10)/(2*sin(π/5)))
+#	Normal Angle: 11π/10
+#	Normal: (cos(11π/10),sin(11π/10)) = (-cos(π/10),-sin(π/10))
+0 - cos(pi/10) * (x + s * cos(pi/10)/(2*sin(pi/5))) - sin(pi/10) * (y - s * sin(pi/10)/(2*sin(pi/5))) < 0
+
+# Fourth Side:
+#	Vertex Angle: 13π/10
+#	Vertex: (s*cos(13π/10)/(2*sin(π/5)),s*sin(13π/10)/(2*sin(π/5))) =
+#		(-s*cos(3π/10)/(2*sin(π/5)),-s*sin(3π/10)/(2*sin(π/5)))
+#	Normal Angle: 3π/2
+#	Normal: (0,-1)
+#0 - (y + s * sin(3*pi/10)/(2*sin(pi/5))) < 0
+y > 0 - s * sin(3*pi/10)/(2*sin(pi/5))
+
+# Fifth Side:
+#	Vertex Angle: 17π/10
+#	Vertex: (s*cos(17π/10)/(2*sin(π/5)),s*sin(17π/10)/(2*sin(π/5))) =
+#		(s*cos(3π/10)/(2*sin(π/5)),-s*sin(3π/10)/(2*sin(π/5)))
+#	Normal Angle: 19π/10
+#	Normal: (cos(19π/10),sin(19π/10)) = (cos(π/10),-sin(π/10))
+cos(pi/10) * (x - s * cos(3*pi/10)/(2*sin(pi/5))) - sin(pi/10) * (y + s * sin(3*pi/10)/(2*sin(pi/5))) < 0
