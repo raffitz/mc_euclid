@@ -1,0 +1,72 @@
+%name: upright torus
+%author: raffitz
+%description: A torus where its diameter is 4 times that of the tube, but standing upright
+
+# The bounding box of the torus is self-explanatory
+width: s
+height: s/4
+depth: s
+
+min_x: 0 - s / 2
+min_y: 0 - s / 8
+min_z: 0 - s / 2
+
+# The torus equation is (sqrt(x²+z²) - R)² + y² < r²
+# where R is the distance from the center of the tube to the center of the
+# torus, and r is the radius of the tube.
+
+# Figure 1: The Torus
+#                    XXXXXXXXXXXXX
+#                 XXXXXXXXXXXXXXXXXXX
+#               XXXXXXXXXXXXXXXXXXXXXXX
+#             XXXXXXXXXXXXXXXXXXXXXXXXXXX
+#            XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#          XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#         XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#        XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#       XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#       XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#     XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#     XXXXXXXXXXXXXXXXXX       XXXXXXXXXXXXXXXXXX
+#    XXXXXXXXXXXXXXXXX           XXXXXXXXXXXXXXXXX
+#    XXXXXXXXXXXXXXX               XXXXXXXXXXXXXXX
+#   XXXXXXXXXXXXXXX                 XXXXXXXXXXXXXXX
+#   XXXXXXXXXXXXXX                   XXXXXXXXXXXXXX
+#   XXXXXXXXXXXXX                     XXXXXXXXXXXXX
+#  XXXXXXXXXXXXXX                     XXXXXXXXXXXXXX
+#  XXXXXXXXXXXXX                       XXXXXXXXXXXXX
+#  XXXXXXXXXXXXX                       XXXXXXXXXXXXX
+#  XXXXXXXXXXXX                         XXXXXXXXXXXX
+#  XXXXXXXXXXXX                         XXXXXXXXXXXX
+#  XXXXXXXXXXXX   R                     XXXXXXXXXXXX
+#  XXXXX|<---------------->|            |<--->|XXXXX
+#  XXXXXXXXXXXX                         XX r XXXXXXX
+#  XXXXXXXXXXXX                         XX   XXXXXXX
+#  XXXXXXXXXXXX                         XXXXXXXXXXXX
+#  XXXXXXXXXXXXX                       XXXXXXXXXXXXX
+#  XXXXXXXXXXXXX                       XXXXXXXXXXXXX
+#  XXXXXXXXXXXXXX                     XXXXXXXXXXXXXX
+#   XXXXXXXXXXXXX                     XXXXXXXXXXXXX
+#   XXXXXXXXXXXXXX                   XXXXXXXXXXXXXX
+#   XXXXXXXXXXXXXXX                 XXXXXXXXXXXXXXX
+#    XXXXXXXXXXXXXXX               XXXXXXXXXXXXXXX
+#    XXXXXXXXXXXXXXXXX           XXXXXXXXXXXXXXXXX
+#     XXXXXXXXXXXXXXXXXX       XXXXXXXXXXXXXXXXXX
+#     XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#       XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#       XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#        XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#         XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#          XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#            XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#             XXXXXXXXXXXXXXXXXXXXXXXXXXX
+#               XXXXXXXXXXXXXXXXXXXXXXX
+#                 XXXXXXXXXXXXXXXXXXX
+#                    XXXXXXXXXXXXX
+#
+# We know that r + R = s/2, and that 2*r = s/4
+# Thus, r = s/8, and R = s3/8
+
+(sqrt(x^2 + z^2) - s*(3/8))^2 + y^2 < (s/8)^2
