@@ -1,0 +1,77 @@
+%name: octahedron
+%author: raffitz
+%description: An octahedron stood on its vertex
+
+# Cube bounding box size:
+
+# Figure 1:
+#      _*_    -
+#    _/ | \_  ^
+#   *_--*--_* height
+#     \_|_/   v
+#       *     -
+#
+#   |<width>| 
+
+# From this diagram, you can tell that the width, height, and depth are the
+# diagonal of the square.
+# We know as a corollary of Pythagoras's theorem that the diagonal of a square
+# of side s is sqrt(2)*s.
+
+width: sqrt 2 * s
+height: sqrt 2 * s
+depth: sqrt 2 * s
+
+# Cube bounding box position:
+
+# Considering that the octahedron's center is the origin, we just need to
+# negate and half the bounding box size to get the minimum boundaries for each
+# dimension.
+min_x: 0 - (s * sqrt 2) / 2
+min_y: 0 - (s * sqrt 2) / 2
+min_z: 0 - (s * sqrt 2) / 2
+
+# The octahedron is the intersection of 8 semi-spaces.
+# Each semi-space is defined by an inequality based on the plane that defines
+# its boundary.
+# The plane equations are achieved through a point belonging to the plane, as
+# well as a vector normal to the plane.
+
+# The eight normal vectors are the possible arrangements of (a,b,c), where a,
+# b, and c can be either 1 or -1.
+
+# Planes based on the top vertex:
+
+# Normal (1,1,1)
+# x + y + (z - (s * sqrt 2) / 2) < 0
+x + y + z < (s * sqrt 2) / 2
+
+# Normal (-1,1,1)
+# - x + y + (z - (s * sqrt 2) / 2) < 0
+y - x + z < (s * sqrt 2) / 2
+
+# Normal (1,-1,1)
+# x - y + (z - (s * sqrt 2) / 2) < 0
+x - y + z < (s * sqrt 2) / 2
+
+# Normal (-1,-1,1)
+# x - y + (z - (s * sqrt 2) / 2) < 0
+0 - x - y + z < (s * sqrt 2) / 2
+
+# Planes based on the bottom vertex:
+
+# Normal (1,1,-1)
+# x + y - (z + (s * sqrt 2) / 2) < 0
+x + y - z < (s * sqrt 2) / 2
+
+# Normal (-1,1,-1)
+# - x + y - (z + (s * sqrt 2) / 2) < 0
+y - x - z < (s * sqrt 2) / 2
+
+# Normal (1,-1,-1)
+# x - y - (z + (s * sqrt 2) / 2) < 0
+x - y - z < (s * sqrt 2) / 2
+
+# Normal (-1,-1,-1)
+# x - y - (z + (s * sqrt 2) / 2) < 0
+0 - x - y - z < (s * sqrt 2) / 2
