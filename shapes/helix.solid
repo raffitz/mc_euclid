@@ -1,0 +1,15 @@
+%name: helix
+%author: raffitz
+%description: A helix
+
+# Bounding box and expression are self-explanatory
+
+width: 12 * s
+height: 12 * s
+depth: 10 * s
+
+min_x: 0 - 6 * s
+min_y: 0 - 6 * s
+min_z: 0
+
+(x - ((5 * s) * cos(z * pi / (5 * s))))^2 + (y - ((5 * s) * sin(z * pi / (5 * s))))^2 <= s^2
