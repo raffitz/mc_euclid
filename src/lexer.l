@@ -14,6 +14,9 @@ char* mce_solid_description;
 
 %}
 
+%option nounput
+%option noinput
+
 %%
 
 "%name: "[^\n]*$	{ mce_solid_name = strdup(strchr(yytext,':')+2); return MCE_TOKEN_EOL; }
