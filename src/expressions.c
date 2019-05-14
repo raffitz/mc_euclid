@@ -145,3 +145,24 @@ double mce_resolve_def(union mce_expression* root, struct mce_vars vars){
 double mce_resolve(union mce_expression* root, struct mce_vars vars){
 	return mce_resolve_super(root, vars, 1);
 }
+
+void mce_free_expression(union mce_expression* root){
+	switch((*root).id.type){
+		case MCE_EXP_VAL:
+		case MCE_EXP_VAR:
+			free(root);
+			break;
+		case MCE_EXP_BIN:
+			mce_free_expression((*root).binary.left);
+			mce_free_expression((*root).binary.right);
+			free(root);
+			break;
+		case MCE_EXP_UNA:
+			mce_free_expression((*root).unary.argument);
+			free(root);
+			break;
+		default:
+			fprintf(stderr,"Unrecognised token value");
+			exit(-1);
+	}
+}

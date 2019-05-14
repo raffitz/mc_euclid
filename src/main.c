@@ -130,7 +130,8 @@ int main(int argc, char** argv){
 
 		fclose(inputfile);
 
-		/* TODO: Free all data structures in between files */
+		mce_free_conditions(&first, &last);
+		free(data);
 	}
 
 	return 0;

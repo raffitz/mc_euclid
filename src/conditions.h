@@ -25,4 +25,6 @@ void mce_condition_at_end(enum mce_conditions_type type, union mce_expression* l
 
 uint8_t mce_check(struct mce_condition* condition, struct mce_vars vars);
 
+void mce_free_conditions(struct mce_condition** first, struct mce_condition** last);
+
 #endif

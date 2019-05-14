@@ -52,3 +52,16 @@ uint8_t mce_check(struct mce_condition* condition, struct mce_vars vars){
 			exit(-1);
 	}
 }
+
+void mce_free_conditions(struct mce_condition** first, struct mce_condition** last){
+	struct mce_condition* aux;
+
+	while((*first) != NULL){
+		aux = (*(*first)).next;
+		mce_free_expression((*(*first)).left);
+		mce_free_expression((*(*first)).right);
+		free(*first);
+		(*first) = aux;
+	}
+	(*last) = NULL;
+}
