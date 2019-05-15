@@ -4,6 +4,12 @@
 #include <math.h>
 #include "expressions.h"
 
+struct mce_vars mce_vars_def(int scale){
+	struct mce_vars result;
+	result.s = scale;
+	return result;
+}
+
 union mce_expression* mce_new(){
 	void* pointer = malloc(sizeof(union mce_expression));
 	if (pointer == NULL){

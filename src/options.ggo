@@ -10,6 +10,7 @@ option "scale" s "The scale factor to be used"
 
 option "output-format" o "The output format"
 	values="cli-ascii","cli-utf8","xpm" enum optional
+	default="cli-ascii"
 
 option "grid" g "Include grid on output"
 	flag off

@@ -73,6 +73,8 @@ struct mce_vars {
 	int z;
 };
 
+struct mce_vars mce_vars_def(int scale);
+
 union mce_expression* mce_val(double value);
 union mce_expression* mce_var(enum mce_variable var);
 union mce_expression* mce_pow(union mce_expression* base, union mce_expression* power);
