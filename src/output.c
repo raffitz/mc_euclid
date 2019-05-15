@@ -90,7 +90,7 @@ void mce_output_cli(struct mce_out_params out_params,
 	for (z = out_params.min_z; z <= out_params.max_z; z++){
 		fprintf(out_params.stream,"%s",format.frame_tl);
 		if(out_params.grid_on){
-			for (x = out_params.min_x; x <= 2*out_params.max_x - 1; x++)
+			for (x = out_params.min_x; x <= 2*out_params.max_x; x++)
 				fprintf(out_params.stream,"%s",format.frame_horiz);
 		}else{
 			for (x = out_params.min_x; x <= out_params.max_x; x++)
@@ -133,7 +133,7 @@ void mce_output_cli(struct mce_out_params out_params,
 
 		fprintf(out_params.stream,"%s",format.frame_bl);
 		if(out_params.grid_on){
-			for (x = out_params.min_x; x <= 2*out_params.max_x - 1; x++)
+			for (x = out_params.min_x; x <= 2*out_params.max_x; x++)
 				fprintf(out_params.stream,"%s",format.frame_horiz);
 		}else{
 			for (x = out_params.min_x; x <= out_params.max_x; x++)

@@ -60,6 +60,8 @@ int main(int argc, char** argv){
 
 	scale = args.scale_arg;
 
+	out_params.grid_on = args.grid_flag > 0;
+
 	for (file_iterator = 0; file_iterator < args.inputs_num; file_iterator++){
 		inputfile = fopen(args.inputs[file_iterator],"r");
 
