@@ -65,12 +65,36 @@ expression:	expression MCE_TOKEN_ADD expression	{ $$ = mce_add($1,$3); }
 	|	MCE_TOKEN_LPAREN expression MCE_TOKEN_RPAREN	{ $$ = $2; }
 	;
 
-definition:	MCE_TOKEN_SETWIDTH expression	{ mce_def_width = mce_resolve_def($2, mce_vars_def(scale)); mce_definition_check = mce_definition_check | 1; }
-	|	MCE_TOKEN_SETHEIGHT expression	{ mce_def_height = mce_resolve_def($2, mce_vars_def(scale)); mce_definition_check = mce_definition_check | 2; }
-	|	MCE_TOKEN_SETDEPTH expression	{ mce_def_depth = mce_resolve_def($2, mce_vars_def(scale)); mce_definition_check = mce_definition_check | 4; }
-	|	MCE_TOKEN_SETMINX expression	{ mce_def_min_x = mce_resolve_def($2, mce_vars_def(scale)); mce_definition_check = mce_definition_check | 8; }
-	|	MCE_TOKEN_SETMINY expression	{ mce_def_min_y = mce_resolve_def($2, mce_vars_def(scale)); mce_definition_check = mce_definition_check | 16; }
-	|	MCE_TOKEN_SETMINZ expression	{ mce_def_min_z = mce_resolve_def($2, mce_vars_def(scale)); mce_definition_check = mce_definition_check | 32; }
+definition:	MCE_TOKEN_SETWIDTH expression	{
+		mce_def_width = mce_resolve_def($2, mce_vars_def(scale));
+		mce_definition_check = mce_definition_check | 1;
+		mce_free_expression($2);
+		}
+	|	MCE_TOKEN_SETHEIGHT expression	{
+		mce_def_height = mce_resolve_def($2, mce_vars_def(scale));
+		mce_definition_check = mce_definition_check | 2;
+		mce_free_expression($2);
+		}
+	|	MCE_TOKEN_SETDEPTH expression	{
+		mce_def_depth = mce_resolve_def($2, mce_vars_def(scale));
+		mce_definition_check = mce_definition_check | 4;
+		mce_free_expression($2);
+		}
+	|	MCE_TOKEN_SETMINX expression	{
+		mce_def_min_x = mce_resolve_def($2, mce_vars_def(scale));
+		mce_definition_check = mce_definition_check | 8;
+		mce_free_expression($2);
+		}
+	|	MCE_TOKEN_SETMINY expression	{
+		mce_def_min_y = mce_resolve_def($2, mce_vars_def(scale));
+		mce_definition_check = mce_definition_check | 16;
+		mce_free_expression($2);
+		}
+	|	MCE_TOKEN_SETMINZ expression	{
+		mce_def_min_z = mce_resolve_def($2, mce_vars_def(scale));
+		mce_definition_check = mce_definition_check | 32;
+		mce_free_expression($2);
+		}
 	;
 
 condition:	expression MCE_TOKEN_CONDITION expression	{ mce_condition_at_end($2, $1, $3, &first, &last); };

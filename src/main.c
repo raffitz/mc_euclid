@@ -7,6 +7,7 @@
 #include "conditions.h"
 #include "output.h"
 #include "parser.tab.h"
+#include "lex.yy.h"
 
 extern char* mce_solid_name;
 extern char* mce_solid_author;
@@ -17,6 +18,8 @@ extern double mce_def_min_x, mce_def_min_y, mce_def_min_z;
 
 extern struct mce_condition* first;
 extern struct mce_condition* last;
+
+extern uint8_t mce_definition_check;
 
 extern int scale;
 
@@ -67,14 +70,24 @@ int main(int argc, char** argv){
 
 		if (inputfile == NULL){
 			perror(argv[0]);
-			fprintf(stderr,"Error opening file <%s>\n",argv[1]);
+			fprintf(stderr,"Error opening file <%s>\n",args.inputs[file_iterator]);
 			exit(-1);
 		}
 
+		mce_definition_check = 0;
 
 		yyin = inputfile;
 
 		yyparse();
+
+		if (mce_definition_check != 63){
+			fprintf(stderr,"Error: file <%s> doesn't declare all boundaries (%d)\n",
+					args.inputs[file_iterator],mce_definition_check);
+			
+			fclose(inputfile);
+
+			mce_free_conditions(&first, &last);
+		}
 
 		/*
 		printf("%s\n%s\n%s\n\n%lf,%lf,%lf\n%lf,%lf,%lf\n\n%d\n\n",
@@ -180,7 +193,15 @@ int main(int argc, char** argv){
 		fclose(inputfile);
 
 		mce_free_conditions(&first, &last);
+
+		free(mce_solid_name);
+		free(mce_solid_author);
+		free(mce_solid_description);
+
+		yylex_destroy();
 	}
+
+	cmdline_parser_free(&args);
 
 	return 0;
 }
