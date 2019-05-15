@@ -87,6 +87,8 @@ union mce_expression* mce_unary(enum mce_unary_type fn, union mce_expression* ar
 double mce_resolve_def(union mce_expression* root, struct mce_vars vars);
 double mce_resolve(union mce_expression* root, struct mce_vars vars);
 
+void mce_print_expressions(union mce_expression* root);
+
 void mce_free_expression(union mce_expression* root);
 
 #endif

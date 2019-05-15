@@ -152,6 +152,86 @@ double mce_resolve(union mce_expression* root, struct mce_vars vars){
 	return mce_resolve_super(root, vars, 1);
 }
 
+void mce_print_expressions(union mce_expression* root){
+	switch((*root).id.type){
+		case MCE_EXP_VAL:
+			printf("%.0f",(*root).val.value);
+			break;
+		case MCE_EXP_VAR:
+			switch((*root).var.var){
+				case MCE_VAR_S:
+					printf("s");
+					break;
+				case MCE_VAR_X:
+					printf("x");
+					break;
+				case MCE_VAR_Y:
+					printf("y");
+					break;
+				case MCE_VAR_Z:
+					printf("z");
+					break;
+				default:
+					printf("?");
+					break;
+			}
+			break;
+		case MCE_EXP_BIN:
+			printf("(");
+			mce_print_expressions((*root).binary.left);
+			switch((*root).binary.operation){
+				case MCE_BIN_POW:
+					printf(")^(");
+					break;
+				case MCE_BIN_MUL:
+					printf(")*(");
+					break;
+				case MCE_BIN_DIV:
+					printf(")/(");
+					break;
+				case MCE_BIN_ADD:
+					printf(")+(");
+					break;
+				case MCE_BIN_SUB:
+					printf(")-(");
+					break;
+				default:
+					printf(")?(");
+					break;
+			}
+			mce_print_expressions((*root).binary.right);
+			printf(")");
+			break;
+		case MCE_EXP_UNA:
+			switch((*root).unary.function){
+				case MCE_UNA_SIN:
+					printf("sin(");
+					break;
+				case MCE_UNA_COS:
+					printf("cos(");
+					break;
+				case MCE_UNA_TAN:
+					printf("tan(");
+					break;
+				case MCE_UNA_SQRT:
+					printf("sqrt(");
+					break;
+				case MCE_UNA_CBRT:
+					printf("cbrt(");
+					break;
+				default:
+					printf("unknown(");
+					break;
+			}
+			mce_print_expressions((*root).unary.argument);
+			printf(")");
+			break;
+		default:
+			printf("[?]");
+			break;
+	}
+}
+
 void mce_free_expression(union mce_expression* root){
 	switch((*root).id.type){
 		case MCE_EXP_VAL:

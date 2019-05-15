@@ -53,6 +53,30 @@ uint8_t mce_check(struct mce_condition* condition, struct mce_vars vars){
 	}
 }
 
+void mce_print_conditions(struct mce_condition* condition){
+	printf("{");
+	mce_print_expressions((*condition).left);
+	switch((*condition).type){
+		case MCE_CONDITION_LT:
+			printf("<");
+			break;
+		case MCE_CONDITION_GT:
+			printf(">");
+			break;
+		case MCE_CONDITION_LTE:
+			printf("<=");
+			break;
+		case MCE_CONDITION_GTE:
+			printf(">=");
+			break;
+		default:
+			printf("??");
+			break;
+	}
+	mce_print_expressions((*condition).right);
+	printf("};\n");
+}
+
 void mce_free_conditions(struct mce_condition** first, struct mce_condition** last){
 	struct mce_condition* aux;
 
