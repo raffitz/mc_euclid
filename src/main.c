@@ -112,12 +112,12 @@ int main(int argc, char** argv){
 
 		memset(data,0,depth * height * width * sizeof(uint8_t));
 
-		for(z = min_z; z <= max_z; z++){
-			for(y = max_y; y >= min_y; y--){
-				for(x = min_x; x <= max_x; x++){
-					def_vars.x = x;
-					def_vars.y = y;
-					def_vars.z = z;
+		for(z = 0; z <= max_z - min_z; z++){
+			for(y = 0; y <= max_y - min_y; y++){
+				for(x = 0; x <= max_x - min_z; x++){
+					def_vars.x = x + min_x;
+					def_vars.y = y + min_y;
+					def_vars.z = z + min_z;
 
 					aux = first;
 
