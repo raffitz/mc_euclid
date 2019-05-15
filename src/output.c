@@ -1,3 +1,5 @@
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <string.h>
 #include "output.h"
 
@@ -57,35 +59,8 @@ void mce_free_format(struct mce_cli_format format){
 
 void mce_output_cli(struct mce_out_params out_params,
 		struct mce_cli_format format){
-	/*
-	FILE* stream;
-	uint8_t* data;
-	int width;
-	int height;
-	int depth;
-	int min_x;
-	int min_y;
-	int min_z;
-	int max_x;
-	int max_y;
-	int max_z;
-	*/
 
 	int x,y,z;
-
-	/*
-	char* frame_tl;
-	char* frame_tr;
-	char* frame_bl;
-	char* frame_br;
-	char* frame_horiz;
-	char* frame_vert;
-	char* grid_horiz;
-	char* grid_vert;
-	char* grid_cross;
-	char* pixel_on;
-	char* pixel_off;
-	*/
 
 	for (z = out_params.min_z; z <= out_params.max_z; z++){
 		fprintf(out_params.stream,"%s",format.frame_tl);
@@ -142,4 +117,120 @@ void mce_output_cli(struct mce_out_params out_params,
 		fprintf(out_params.stream,"%s\n",format.frame_br);
 
 	}
+}
+
+void mce_output_xpm(struct mce_out_params out_params){
+
+	int x,y,z;
+
+	int out_width, out_height;
+
+	char* dirbuffer;
+	char* namebuffer;
+	char* linebuffer;
+
+	int fileno;
+
+	FILE* xpm_out;
+
+	dirbuffer = (char*) malloc((strlen(out_params.name) + 10)*sizeof(char));
+	namebuffer = (char*) malloc((strlen(out_params.name) + 25)*sizeof(char));
+
+	sprintf(dirbuffer,"%s-%d",out_params.name,out_params.scale);
+
+	if(mkdir(dirbuffer,0755)<0){
+		perror("mc_euclid");
+		dirbuffer[0] = '\0';
+	}else{
+		sprintf(dirbuffer,"%s-%d/",out_params.name,out_params.scale);
+	}
+
+	out_width = out_params.max_x - out_params.min_x + 1;
+	out_height = out_params.max_y - out_params.min_y + 1;
+
+	linebuffer = (char*) malloc((out_width+5)*5*sizeof(char));
+
+	if(out_params.grid_on){
+		out_width = 4 * out_width + 1;
+		out_height = 4 * out_height + 1;
+	}
+
+	for (z = out_params.min_z; z <= out_params.max_z; z++){
+		fileno = z - out_params.min_z;
+		sprintf(namebuffer,"%s%03d.xpm",dirbuffer,fileno);
+
+		xpm_out = NULL;
+		xpm_out = fopen(namebuffer,"w");
+		if(xpm_out == NULL){
+			perror("mc_euclid");
+			continue;
+		}
+
+		fprintf(xpm_out,"/* XPM */\n/* %s by %s */\n/* %s */\n",
+				out_params.name, out_params.author,
+				out_params.description);
+
+		fprintf(xpm_out,"static char * slice%03d_xpm[] = {\n",fileno);
+
+		if(out_params.grid_on){
+			fprintf(xpm_out,"\"%d %d 4 1\",\n",out_width,out_height);
+			fprintf(xpm_out,"\"-\tc #ffffff\",\n");
+			fprintf(xpm_out,"\"+\tc #000000\",\n");
+			fprintf(xpm_out,"\"r\tc #ff0000\",\n");
+			fprintf(xpm_out,"\"|\tc #659fdb\",\n");
+
+			fprintf(xpm_out,"\"|");
+			for (x = out_params.min_x; x <= out_params.max_x; x++)
+				fprintf(xpm_out,"||||");
+			fprintf(xpm_out,"\",\n");
+
+			for (y = out_params.min_y; y <= out_params.max_y; y++){
+				sprintf(linebuffer,"\"|");
+				for (x = out_params.min_x; x <= out_params.max_x; x++){
+					if (out_params.data[(z * out_params.height + y) * out_params.width + x]){
+						strcat(linebuffer,"+++|");
+					}else{
+						strcat(linebuffer,"---|");
+					}
+				}
+				strcat(linebuffer,"\",");
+
+				fprintf(xpm_out,"%s\n",linebuffer);
+				fprintf(xpm_out,"%s\n",linebuffer);
+				fprintf(xpm_out,"%s\n",linebuffer);
+
+				fprintf(xpm_out,"\"|");
+				for (x = out_params.min_x; x <= out_params.max_x; x++){
+					fprintf(xpm_out,"||||");
+				}
+				if (y == out_params.max_y){
+					fprintf(xpm_out,"\"\n");
+				}else{
+					fprintf(xpm_out,"\",\n");
+				}
+			}
+		}else{
+			fprintf(xpm_out,"\"%d %d 2 1\",\n",out_width,out_height);
+			fprintf(xpm_out,"\"-\tc #ffffff\",\n");
+			fprintf(xpm_out,"\"+\tc #000000\",\n");
+
+			for (y = out_params.min_y; y <= out_params.max_y; y++){
+				fprintf(xpm_out,"\"");
+				for (x = out_params.min_x; x <= out_params.max_x; x++){
+					fprintf(xpm_out,out_params.data[(z * out_params.height + y) * out_params.width + x] ? "+" : "-");
+				}
+				if (y == out_params.max_y){
+					fprintf(xpm_out,"\"\n");
+				}else{
+					fprintf(xpm_out,"\",\n");
+				}
+			}
+
+		}
+		fprintf(xpm_out,"};\n");
+		fclose(xpm_out);
+	}
+	free(linebuffer);
+	free(namebuffer);
+	free(dirbuffer);
 }

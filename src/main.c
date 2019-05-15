@@ -157,6 +157,12 @@ int main(int argc, char** argv){
 			}
 		}
 
+		out_params.name = mce_solid_name;
+		out_params.author = mce_solid_author;
+		out_params.description = mce_solid_description;
+
+		out_params.scale = scale;
+
 		out_params.width = width;
 		out_params.height = height;
 		out_params.depth = depth;
@@ -183,7 +189,8 @@ int main(int argc, char** argv){
 				mce_free_format(cli_format);
 				break;
 			case output_format_arg_xpm:
-				yyerror("XPM format unimplemented");
+				mce_output_xpm(out_params);
+				break;
 			default:
 				yyerror("Error processing format");
 		}

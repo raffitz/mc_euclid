@@ -23,6 +23,10 @@ struct mce_out_params{
 	FILE* stream;
 	uint8_t* data;
 	uint8_t grid_on;
+	char* name;
+	char* author;
+	char* description;
+	int scale;
 	int width;
 	int height;
 	int depth;
@@ -49,5 +53,7 @@ void mce_free_format(struct mce_cli_format format);
 
 void mce_output_cli(struct mce_out_params out_params,
 		struct mce_cli_format format);
+
+void mce_output_xpm(struct mce_out_params out_params);
 
 #endif
