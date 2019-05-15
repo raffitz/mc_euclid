@@ -82,6 +82,14 @@ int main(int argc, char** argv){
 				scale);
 		*/
 
+		/*
+		aux = first;
+		while(aux != NULL){
+			mce_print_conditions(aux);
+			aux = (*aux).next;
+		}
+		*/
+
 		def_vars.s = scale;
 
 		out_max_x = min_x = round(mce_def_min_x);
