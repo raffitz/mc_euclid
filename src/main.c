@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
 #include <math.h>
 #include "cmdline.h"
 #include "expressions.h"
@@ -107,17 +108,21 @@ int main(int argc, char** argv){
 
 		def_vars.s = scale;
 
-		out_max_x = min_x = round(mce_def_min_x);
-		out_max_y = min_y = round(mce_def_min_y);
-		out_max_z = min_z = round(mce_def_min_z);
+		min_x = floor(mce_def_min_x);
+		min_y = floor(mce_def_min_y);
+		min_z = floor(mce_def_min_z);
 
-		width = ceil(mce_def_width);
-		height = ceil(mce_def_height);
-		depth = ceil(mce_def_depth);
+		out_max_x = out_max_y = out_max_z = INT_MIN;
 
-		out_min_x = max_x = min_x + width;
-		out_min_y = max_y = min_y + height;
-		out_min_z = max_z = min_z + depth;
+		width = ceil(mce_def_width) + 1;
+		height = ceil(mce_def_height) + 1;
+		depth = ceil(mce_def_depth) + 1;
+
+		max_x = min_x + width;
+		max_y = min_y + height;
+		max_z = min_z + depth;
+
+		out_min_x = out_min_y = out_min_z = INT_MAX;
 
 		data = (uint8_t*) malloc(depth * height * width * sizeof(uint8_t));
 		if (data == NULL){
@@ -129,7 +134,7 @@ int main(int argc, char** argv){
 
 		for(z = 0; z <= max_z - min_z; z++){
 			for(y = 0; y <= max_y - min_y; y++){
-				for(x = 0; x <= max_x - min_z; x++){
+				for(x = 0; x <= max_x - min_x; x++){
 					def_vars.x = x + min_x;
 					def_vars.y = y + min_y;
 					def_vars.z = z + min_z;

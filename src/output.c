@@ -333,6 +333,14 @@ void mce_output_png(struct mce_out_params out_params){
 				row[1] = 0x9f;
 				row[2] = 0xdb;
 				for (x = out_params.min_x; x <= out_params.max_x; x++){
+					/*
+					if ((z * out_params.height + y) * out_params.width + x >= out_params.width * out_params.height * out_params.depth){
+						fprintf(stderr,"x:%d\twidth:%d\n",x,out_params.width);
+						fprintf(stderr,"y:%d\theight:%d\n",y,out_params.height);
+						fprintf(stderr,"z:%d\tdepth:%d\n",z,out_params.depth);
+						fprintf(stderr,"left:%d\tright:%d\n",(z * out_params.height + y) * out_params.width + x, out_params.width * out_params.height * out_params.depth);
+					}
+					*/
 					for (i = 0; i < 3; i++){
 						if (out_params.data[(z * out_params.height + y) * out_params.width + x]){
 							row[((x - out_params.min_x)*4 + i + 1)*3] = 0x0;
