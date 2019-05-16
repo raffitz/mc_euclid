@@ -132,9 +132,9 @@ int main(int argc, char** argv){
 
 		memset(data,0,depth * height * width * sizeof(uint8_t));
 
-		for(z = 0; z <= max_z - min_z; z++){
-			for(y = 0; y <= max_y - min_y; y++){
-				for(x = 0; x <= max_x - min_x; x++){
+		for(z = 0; z < max_z - min_z; z++){
+			for(y = 0; y < max_y - min_y; y++){
+				for(x = 0; x < max_x - min_x; x++){
 					def_vars.x = x + min_x;
 					def_vars.y = y + min_y;
 					def_vars.z = z + min_z;
