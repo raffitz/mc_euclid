@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-Wall -pedantic -g
-LFLAGS=-lm -lfl
+LFLAGS=-lm -lfl -lpng
 COMMIT_ID=$(shell git rev-parse HEAD)
 
 .PHONY: all

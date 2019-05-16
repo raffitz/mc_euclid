@@ -56,4 +56,6 @@ void mce_output_cli(struct mce_out_params out_params,
 
 void mce_output_xpm(struct mce_out_params out_params);
 
+void mce_output_png(struct mce_out_params out_params);
+
 #endif

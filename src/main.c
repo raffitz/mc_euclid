@@ -191,6 +191,9 @@ int main(int argc, char** argv){
 			case output_format_arg_xpm:
 				mce_output_xpm(out_params);
 				break;
+			case output_format_arg_png:
+				mce_output_png(out_params);
+				break;
 			default:
 				yyerror("Error processing format");
 		}
