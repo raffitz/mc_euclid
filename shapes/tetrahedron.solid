@@ -32,7 +32,7 @@
 # From these diagrams, you can tell that the width is the height of an
 # equilateral triangle. If we assume the edge of the tetrahedron is s, then:
 
-width: s * cos(pi / 3)
+width: s * sin(pi / 3)
 height: s
 
 # For the depth, a few calculations are necessary:
@@ -80,38 +80,49 @@ min_z: 0
 
 # The normal vector for the plane ABC is the cross product of AB and AC
 #
-# AB = (-(s/2)*tan(pi/6),s/2,-s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2))
-# AC = (-(s/2)*tan(pi/6),-s/2,-s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2))
+# AB = (-(s/2)*tan(pi/6),
+#	s/2,
+#	-s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2))
+# AC = (-(s/2)*tan(pi/6),
+#	-s/2,
+#	-s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2))
 #
-# v1 = (-(s^2)*sqrt((sin(pi/3))^2-((1/2)*tan(pi/6))^2),0,-((s^2)/2)*tan(pi/6))
+# v1 = (-(s^2)*sqrt((sin(pi/3))^2-((1/2)*tan(pi/6))^2),
+#	0,
+#	((s^2)/2)*tan(pi/6))
 # point1 = A = (0,0,s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2))
 
-(0-x)*(s^2)*sqrt((sin(pi/3))^2-((1/2)*tan(pi/6))^2) - \
-(s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2)-z)*((s^2)/2)*tan(pi/6) \
+(0-x)*(s^2)*sqrt((sin(pi/3))^2-((1/2)*tan(pi/6))^2) + \
+(z-(s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2)))*((s^2)/2)*tan(pi/6) \
 <= 0
 
 # The normal vector for the plane ADB is the cross product of AD and AB
 #
-# AD = (s * (sin(pi/3) - tan(pi/6)/2),0,
-# 		-s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2))
-# AB = (-(s/2)*tan(pi/6),s/2,-s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2))
+# AD = (s * (sin(pi/3) - tan(pi/6)/2),
+#	0,
+#	-s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2))
+# AB = (-(s/2)*tan(pi/6),
+#	s/2,
+#	-s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2))
 #
-# v2 = (s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2)*s/2,
+# v2 = ((s^2)*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2)/2,
 #	((s^2)/2)*tan(pi/6)*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2) +
 #	(s^2) * (sin(pi/3) - tan(pi/6)/2) * sqrt((sin(pi/3))^2 -
 #	((1/2)*tan(pi/6))^2),
 #	(s^2) * (sin(pi/3) - tan(pi/6)/2) / 2)
 #
 # point1 = A = (0,0,s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2))
-x * s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2)*s/2 + \
+x * ((s^2)*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2)/2) + \
 (((s^2)/2)*tan(pi/6)*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2) + \
 (s^2) * (sin(pi/3) - tan(pi/6)/2) * sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2))\
-* y + ((s^2) * (sin(pi/3) - tan(pi/6)/2) / 2) * z <= 0
+* y + ((s^2) * (sin(pi/3) - tan(pi/6)/2) / 2) * \
+(z - s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2)) <= 0
 
 # The normal vector for the plane ACD is equal to the previous one but
 # reflected on the y axis. Thus, we only have to flip a plus to a minus.
-#                                                   v
-x * s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2)*s/2 - \
+#                                                       v
+x * ((s^2)*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2)/2) - \
 (((s^2)/2)*tan(pi/6)*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2) + \
 (s^2) * (sin(pi/3) - tan(pi/6)/2) * sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2))\
-* y + ((s^2) * (sin(pi/3) - tan(pi/6)/2) / 2) * z <= 0
+* y + ((s^2) * (sin(pi/3) - tan(pi/6)/2) / 2) * \
+(z - s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2)) <= 0
