@@ -28,6 +28,7 @@ char* mce_solid_description;
 "min_x: "	{ return MCE_TOKEN_SETMINX; }
 "min_y: "	{ return MCE_TOKEN_SETMINY; }
 "min_z: "	{ return MCE_TOKEN_SETMINZ; }
+"\\"\n	{}
 ^#[^\n]*$	{ return MCE_TOKEN_EOL; }
 "\n"	{ return MCE_TOKEN_EOL; }
 -?[0-9]+\.?[0-9]*	{
