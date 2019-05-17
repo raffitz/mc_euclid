@@ -1,0 +1,117 @@
+%name: tetrahedron
+%author: raffitz
+%description: A tetrahedron
+
+# Tetrahedron bounding box size:
+
+# Figure 1: Side View
+#
+#       *_        -
+#      /  \       ^
+#     / |  \_
+#    /  |    \    depth
+#   /   |     \_  v
+#  *----0-------* -
+#
+# Figure 2: Top View
+#
+#  *_B
+#  | \_
+#  |\  \_
+#  | \   \_
+#  |  \    \_
+#  |   \A    \__
+#  |<a> *-<b>-__*D
+#  |   /    _/
+#  |  /   _/
+#  | /  _/
+#  |/ _/
+#  |_/
+#  *C
+
+# From these diagrams, you can tell that the width is the height of an
+# equilateral triangle. If we assume the edge of the tetrahedron is s, then:
+
+width: s * cos(pi / 3)
+height: s
+
+# For the depth, a few calculations are necessary:
+#
+# a + b = s * sin(pi/3)
+# a² + (s/2)² = b²
+# a = (s/2)*tan(pi/6)
+# b = s * (sin(pi/3) - tan(pi/6)/2)
+# a² + d² = (s*sin(pi/3))²
+
+depth: s * sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2)
+
+# Considering that the origin is in the center of the base, the min x is -a,
+# the min y is -s/2, and the min z is 0
+min_x: 0 - (s * tan(pi/6)) / 2
+min_y: 0 - s / 2
+min_z: 0
+
+# A can be given by:
+#
+# (0,0,depth)
+# (0,0,s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2))
+
+# B and C can be given by:
+#
+# (-a,±s/2,0)
+# (-(s/2)*tan(pi/6),±s/2,0)
+
+# D can be given by:
+#
+# (b,0,0)
+# (s * (sin(pi/3) - tan(pi/6)/2),0,0)
+
+# The tetrahedron can be given by the intersection of 4 semi-spaces.
+# However, one of the semi-spaces is z >= 0, which is implicit in the 
+# declaration of the min z, so it will not require a condition.
+
+# Cross Product Cheatsheet
+#
+# a ⨯ b = | i   j   k   |
+#         | ax  ay  az  |
+#         | bx  by  bz  |
+#
+#       = (ay bz - az by, az bx - ax bz, ax by - ay bx)
+
+# The normal vector for the plane ABC is the cross product of AB and AC
+#
+# AB = (-(s/2)*tan(pi/6),s/2,-s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2))
+# AC = (-(s/2)*tan(pi/6),-s/2,-s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2))
+#
+# v1 = (-(s^2)*sqrt((sin(pi/3))^2-((1/2)*tan(pi/6))^2),0,-((s^2)/2)*tan(pi/6))
+# point1 = A = (0,0,s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2))
+
+(0-x)*(s^2)*sqrt((sin(pi/3))^2-((1/2)*tan(pi/6))^2) - \
+(s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2)-z)*((s^2)/2)*tan(pi/6) \
+<= 0
+
+# The normal vector for the plane ADB is the cross product of AD and AB
+#
+# AD = (s * (sin(pi/3) - tan(pi/6)/2),0,
+# 		-s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2))
+# AB = (-(s/2)*tan(pi/6),s/2,-s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2))
+#
+# v2 = (s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2)*s/2,
+#	((s^2)/2)*tan(pi/6)*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2) +
+#	(s^2) * (sin(pi/3) - tan(pi/6)/2) * sqrt((sin(pi/3))^2 -
+#	((1/2)*tan(pi/6))^2),
+#	(s^2) * (sin(pi/3) - tan(pi/6)/2) / 2)
+#
+# point1 = A = (0,0,s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2))
+x * s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2)*s/2 + \
+(((s^2)/2)*tan(pi/6)*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2) + \
+(s^2) * (sin(pi/3) - tan(pi/6)/2) * sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2))\
+* y + ((s^2) * (sin(pi/3) - tan(pi/6)/2) / 2) * z <= 0
+
+# The normal vector for the plane ACD is equal to the previous one but
+# reflected on the y axis. Thus, we only have to flip a plus to a minus.
+#                                                   v
+x * s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2)*s/2 - \
+(((s^2)/2)*tan(pi/6)*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2) + \
+(s^2) * (sin(pi/3) - tan(pi/6)/2) * sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2))\
+* y + ((s^2) * (sin(pi/3) - tan(pi/6)/2) / 2) * z <= 0
