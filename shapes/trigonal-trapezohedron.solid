@@ -1,0 +1,50 @@
+%name: trigonal-trapezohedron
+%author: raffitz
+%description: A trigonal trapezohedron made by intersecting two tetrahedra
+
+# It inherits the tetrahedron bounding box size (see tetrahedron.solid)
+
+width: s * sin(pi / 3)
+height: s
+depth: s * sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2)
+
+min_x: 0 - (s * tan(pi/6)) / 2
+min_y: 0 - s / 2
+min_z: 0
+
+# The first three planes are identical to those of the tetrahedron
+
+(0-x)*(s^2)*sqrt((sin(pi/3))^2-((1/2)*tan(pi/6))^2) + \
+(z-(s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2)))*((s^2)/2)*tan(pi/6) \
+<= 0
+
+x * ((s^2)*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2)/2) + \
+(((s^2)/2)*tan(pi/6)*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2) + \
+(s^2) * (sin(pi/3) - tan(pi/6)/2) * sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2))\
+* y + ((s^2) * (sin(pi/3) - tan(pi/6)/2) / 2) * \
+(z - s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2)) <= 0
+
+x * ((s^2)*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2)/2) - \
+(((s^2)/2)*tan(pi/6)*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2) + \
+(s^2) * (sin(pi/3) - tan(pi/6)/2) * sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2))\
+* y + ((s^2) * (sin(pi/3) - tan(pi/6)/2) / 2) * \
+(z - s*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2)) <= 0
+
+# The second three are obtained by flipping the normals in the x and z axes,
+# and by changing the vertex to (0,0,0)
+
+x*(s^2)*sqrt((sin(pi/3))^2-((1/2)*tan(pi/6))^2) - \
+z*((s^2)/2)*tan(pi/6) \
+<= 0
+
+(0-x) * ((s^2)*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2)/2) + \
+(((s^2)/2)*tan(pi/6)*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2) + \
+(s^2) * (sin(pi/3) - tan(pi/6)/2) * sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2))\
+* y - ((s^2) * (sin(pi/3) - tan(pi/6)/2) / 2) * \
+z <= 0
+
+(0-x) * ((s^2)*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2)/2) - \
+(((s^2)/2)*tan(pi/6)*sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2) + \
+(s^2) * (sin(pi/3) - tan(pi/6)/2) * sqrt((sin(pi/3))^2 - ((1/2)*tan(pi/6))^2))\
+* y - ((s^2) * (sin(pi/3) - tan(pi/6)/2) / 2) * \
+z <= 0
