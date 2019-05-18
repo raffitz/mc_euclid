@@ -1,0 +1,179 @@
+%name: laying-octahedron
+%author: raffitz
+%description: An octahedron stood on its face
+
+# Octahedron bounding box size:
+
+# Figure 1:
+# a)   *-----*      -
+#     /|\__   \     ^
+#    / |   \__ \
+#   /  |      \_\
+#  *   |       _>*  height
+#   \  |    __/ /
+#    \ | __/   /
+#     \|/     /     v
+#      *-----*      -
+# b)
+#      *---------*  -
+#     / \       /   ^
+#    |   \     |
+#    |    \    |    depth
+#    |     \   |
+#   /       \ /     v
+#  *---------*      -
+#
+#  |<   width   >|
+
+# Figure 2:
+#      *--c--*-a-*
+#     / \    |  /
+#    |   \   | |
+#    |   s\  b |s sin(pi/3)
+#    |     \ | |
+#   /       \|/
+#  *---------*
+#  s sin(pi/3)
+
+# Figure 3:
+# a)   *-----*
+#     /|\__   \
+#    / |   \__ \
+#   /  |      \_\
+#  *<a>|<>O<-d-_>*
+#   \  | e  __/ /
+#    \ | __/   /
+#     \|/     /
+#      *-----*
+# b)   *-----*
+#     /   __/|\
+#    / __/   | \
+#   /_/      |  \
+#  *<_-d->O<>|<a>*
+#   \ \__   e|  /
+#    \   \__ | /
+#     \     \|/
+#      *-----*
+
+# From these diagrams, you can tell:
+# width = s * sin(pi/3) + a
+# width = 2 * d
+# height = s
+# depth = b
+# a = d - e
+# d + e = s*sin(pi/6)
+# e = (s/2)*tan(pi/6)
+# d = s * (sin(pi/3) - tan(pi/6)/2)
+# a = s * (sin(pi/3) - tan(pi/6))
+# a^2 + b^2 = (s * sin(pi/3))^2
+# b = sqrt((s * sin(pi/3))^2 - (s * (sin(pi/3) - tan(pi/6)))^2)
+
+width: 2 * s * (sin(pi/3) - tan(pi/6)/2)
+height: s
+depth: sqrt((s * sin(pi/3))^2 - (s * (sin(pi/3) - tan(pi/6)))^2)
+
+# Cube bounding box position:
+
+# Considering that the center of the base is the origin, we just need to
+# negate and half the bounding box width and height to get the minimum
+# boundaries for each dimension. As to depth, we'll set the base on z = 0
+min_x: 0 - s * (sin(pi/3) - tan(pi/6)/2)
+min_y: 0 - (s / 2)
+min_z: 0
+
+# The octahedron is the intersection of 8 semi-spaces.
+# The z > 0 and z < depth semi-spaces are implicit.
+
+
+# Figure 4:
+#     B*-----*D
+#     /|\__   \
+#    / |   \__ \
+#   /  |      \_\
+# E*   |       _>*A
+#   \  |    __/ /
+#    \ | __/   /
+#     \|/     /
+#     C*-----*F
+
+# A: (d,0,b)
+# B: (-e,s/2,b)
+# C: (-e,-s/2,b)
+# D: (e,s/2,0)
+# E: (-d,0,0)
+# F: (e,-s/2,0)
+
+# The simplest way to obtain the six remaining semi-spaces is the following:
+# i:	calculate the BEC normal, and apply it to E to obtain BEC
+# ii:	flip the BEC normal (i), and apply it to A to obtain AFD
+# iii:	calculate the ADB normal, and apply it to A to obtain ADB
+# iv:	mirror the ADB normal (iii), and apply it to A to obtain ACF
+# v:	flip the ADB normal (iii), and apply it to E to obtain CEF
+# vi:	flip and mirror the ADB normal (iii), and apply it to E to obtain BDE
+
+# Cross Product Cheatsheet
+#
+# a ⨯ b = | i   j   k   |
+#         | ax  ay  az  |
+#         | bx  by  bz  |
+#
+#       = (ay bz - az by, az bx - ax bz, ax by - ay bx)
+
+# i:	BEC normal
+#
+#	EC = (-e-(-d),-s/2,b) = (a,-s/2,b)
+#	EB = (a,s/2,b)
+#
+#	normal = (-s*b,0,a*s/2 + (s/2)*a)
+#		= (-s*b,0,a*s)
+(x + (s * (sin(pi/3) - tan(pi/6)/2))) * \
+((0-s)*sqrt((s * sin(pi/3))^2 - (s * (sin(pi/3) - tan(pi/6)))^2)) + \
+z * ((s^2) * (sin(pi/3) - tan(pi/6))) <= 0
+
+# ii:	AFD normal
+# 	normal = (s*b,0,-a*s)
+(x - (s * (sin(pi/3) - tan(pi/6)/2))) * \
+(s*sqrt((s * sin(pi/3))^2 - (s * (sin(pi/3) - tan(pi/6)))^2)) - \
+(z - sqrt((s * sin(pi/3))^2 - (s * (sin(pi/3) - tan(pi/6)))^2)) * \
+((s^2) * (sin(pi/3) - tan(pi/6))) <= 0
+
+# iii:	ADB normal
+#
+#	AD = (e-d,s/2,-b)
+#	AB = (-e-d,s/2,0)
+#
+#	normal = (b*s/2,b*(e+d),(e-d)*s/2 + (s/2)*(e+d))
+#		= (b*s/2,b*(e+d),e*s)
+
+(x - s * (sin(pi/3) - tan(pi/6)/2)) * \
+(sqrt((s * sin(pi/3))^2 - (s * (sin(pi/3) - tan(pi/6)))^2)*s/2) + \
+y * (sqrt((s * sin(pi/3))^2 - (s * (sin(pi/3) - tan(pi/6)))^2) * \
+(s * sin(pi/3))) + \
+(z - sqrt((s * sin(pi/3))^2 - (s * (sin(pi/3) - tan(pi/6)))^2)) * \
+((s^2)/2)*tan(pi/6) <= 0
+
+# iv:	ACF normal
+#	normal = (b*s/2,-b*(e+d),e*s)
+
+(x - s * (sin(pi/3) - tan(pi/6)/2)) * \
+(sqrt((s * sin(pi/3))^2 - (s * (sin(pi/3) - tan(pi/6)))^2)*s/2) - \
+y * (sqrt((s * sin(pi/3))^2 - (s * (sin(pi/3) - tan(pi/6)))^2) * \
+(s * sin(pi/3))) + \
+(z - sqrt((s * sin(pi/3))^2 - (s * (sin(pi/3) - tan(pi/6)))^2)) * \
+((s^2)/2)*tan(pi/6) <= 0
+
+# v:	CEF normal
+#	normal = (-b*s/2,b*(e+d),-e*s)
+(x + s * (sin(pi/3) - tan(pi/6)/2)) * \
+(sqrt((s * sin(pi/3))^2 - (s * (sin(pi/3) - tan(pi/6)))^2)*(0-s)/2) + \
+y * (sqrt((s * sin(pi/3))^2 - (s * (sin(pi/3) - tan(pi/6)))^2) * \
+(s * sin(pi/3))) - \
+z * ((s^2)/2)*tan(pi/6) <= 0
+
+# vi:	BDE normal
+#	normal = (-b*s/2,-b*(e+d),-e*s)
+(x + s * (sin(pi/3) - tan(pi/6)/2)) * \
+(sqrt((s * sin(pi/3))^2 - (s * (sin(pi/3) - tan(pi/6)))^2)*(0-s)/2) - \
+y * (sqrt((s * sin(pi/3))^2 - (s * (sin(pi/3) - tan(pi/6)))^2) * \
+(s * sin(pi/3))) - \
+z * ((s^2)/2)*tan(pi/6) <= 0
