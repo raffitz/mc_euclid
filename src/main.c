@@ -14,6 +14,8 @@ extern char* mce_solid_name;
 extern char* mce_solid_author;
 extern char* mce_solid_description;
 
+extern int line_counter;
+
 extern double mce_def_width, mce_def_height, mce_def_depth;
 extern double mce_def_min_x, mce_def_min_y, mce_def_min_z;
 
@@ -27,7 +29,7 @@ extern int scale;
 extern FILE* yyin;
 
 void yyerror(char* content){
-	fprintf(stderr, "mc_euclid: %s\n", content);
+	fprintf(stderr, "mc_euclid: %d: %s\n", line_counter, content);
 	exit(-1);
 }
 
@@ -76,6 +78,7 @@ int main(int argc, char** argv){
 		}
 
 		mce_definition_check = 0;
+		line_counter = 0;
 
 		yyin = inputfile;
 

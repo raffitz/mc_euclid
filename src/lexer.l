@@ -12,6 +12,8 @@ char* mce_solid_name;
 char* mce_solid_author;
 char* mce_solid_description;
 
+int line_counter = 1;
+
 %}
 
 %option nounput
@@ -19,18 +21,18 @@ char* mce_solid_description;
 
 %%
 
-"%name: "[^\n]*$	{ mce_solid_name = strdup(strchr(yytext,':')+2); return MCE_TOKEN_EOL; }
-"%author: "[^\n]*$	{ mce_solid_author = strdup(strchr(yytext,':')+2); return MCE_TOKEN_EOL; }
-"%description: "[^\n]*$	{ mce_solid_description = strdup(strchr(yytext,':')+2); return MCE_TOKEN_EOL; }
+"%name: "[^\n]*$	{ mce_solid_name = strdup(strchr(yytext,':')+2); }
+"%author: "[^\n]*$	{ mce_solid_author = strdup(strchr(yytext,':')+2); }
+"%description: "[^\n]*$	{ mce_solid_description = strdup(strchr(yytext,':')+2); }
 "width: "	{ return MCE_TOKEN_SETWIDTH; }
 "height: "	{ return MCE_TOKEN_SETHEIGHT; }
 "depth: "	{ return MCE_TOKEN_SETDEPTH; }
 "min_x: "	{ return MCE_TOKEN_SETMINX; }
 "min_y: "	{ return MCE_TOKEN_SETMINY; }
 "min_z: "	{ return MCE_TOKEN_SETMINZ; }
-"\\"\n	{}
-^#[^\n]*$	{ return MCE_TOKEN_EOL; }
-"\n"	{ return MCE_TOKEN_EOL; }
+"\\"\n	{ line_counter++; }
+^#[^\n]*$	{}
+"\n"	{ line_counter++; return MCE_TOKEN_EOL; }
 -?[0-9]+\.?[0-9]*	{
 		double aux;
 
