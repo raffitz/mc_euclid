@@ -130,6 +130,12 @@ double mce_resolve_super(union mce_expression* root, struct mce_vars vars, uint8
 					return cos(mce_resolve_super((*root).unary.argument,vars,allow_xyz));
 				case MCE_UNA_TAN:
 					return tan(mce_resolve_super((*root).unary.argument,vars,allow_xyz));
+				case MCE_UNA_ASIN:
+					return asin(mce_resolve_super((*root).unary.argument,vars,allow_xyz));
+				case MCE_UNA_ACOS:
+					return acos(mce_resolve_super((*root).unary.argument,vars,allow_xyz));
+				case MCE_UNA_ATAN:
+					return atan(mce_resolve_super((*root).unary.argument,vars,allow_xyz));
 				case MCE_UNA_SQRT:
 					return sqrt(mce_resolve_super((*root).unary.argument,vars,allow_xyz));
 				case MCE_UNA_CBRT:

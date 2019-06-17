@@ -27,6 +27,9 @@ enum mce_unary_type {
 	MCE_UNA_SIN,
 	MCE_UNA_COS,
 	MCE_UNA_TAN,
+	MCE_UNA_ASIN,
+	MCE_UNA_ACOS,
+	MCE_UNA_ATAN,
 	MCE_UNA_SQRT,
 	MCE_UNA_CBRT
 };
